@@ -1,7 +1,7 @@
 import "./global.css"
-import { SplashScreen, Stack } from "expo-router";
+import {Redirect, SplashScreen, Stack} from "expo-router";
 import { useFonts} from "expo-font";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -17,6 +17,8 @@ export default function RootLayout() {
     'BarlowSemiCondensed-Black': require('@/assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Black.ttf'),
   });
 
+  const [isAuthenticated] = useState(false);
+
   useEffect(()=> {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
@@ -26,5 +28,17 @@ export default function RootLayout() {
   if (!fontsLoaded) {
     return null;
   }
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+      <Stack screenOptions={{ headerShown: false }}>
+        {!isAuthenticated ? (
+            <>
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(registration)" />
+              <Stack.Screen name="index" />
+            </>
+        ) : (
+            <Redirect href="/(tabs)/main" />
+        )}
+      </Stack>
+  );
 }

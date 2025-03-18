@@ -46,9 +46,11 @@ const SignIn = () => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity className="bg-[#333B48] h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px]">
-                <Text className="text-[#78818A] text-24 font-fontHeader pt-[7px]">Sign In</Text>
-            </TouchableOpacity>
+            <Link href="../(tabs)/main" asChild>
+                <TouchableOpacity className="bg-[#333B48] h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px]">
+                    <Text className="text-[#78818A] text-24 font-fontHeader pt-[7px]">Sign In</Text>
+                </TouchableOpacity>
+            </Link>
 
             <Link href="../" asChild>
                 <TouchableOpacity className="items-center active:opacity-50">
