@@ -1,7 +1,11 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { useState } from "react";
+import { View, Text, Image, Pressable, Modal } from "react-native";
 import { Link } from "expo-router";
+import EmailMenu from "./components/EmailMenu";
 
 export default function Index() {
+    const [showEmailMenu, setShowEmailMenu] = useState(false);
+
     return (
         <View className="flex-1 relative bg-primary">
             <Image source={require('../assets/images/welcome-page/top-frame.png')} className="w-full h-[170px] absolute top-0 z-0" resizeMode="cover"/>
@@ -17,16 +21,18 @@ export default function Index() {
                     </Pressable>
                 </Link>
 
-                <Link href="/(auth)/sign-in" asChild>
-                    <Pressable className="active:opacity-50">
-                        <Text className="text-highlight/70 text-[16px] font-fontMain-bold underline">
-                            Already have an account?
-                        </Text>
-                    </Pressable>
-                </Link>
+                <Pressable className="active:opacity-50" onPress={() => setShowEmailMenu(true)}>
+                    <Text className="text-highlight/70 text-[16px] font-fontMain-bold underline">
+                        Already have an account?
+                    </Text>
+                </Pressable>
             </View>
 
             <Image source={require('../assets/images/welcome-page/bottom-frame.png')} className="w-full h-[185px] absolute bottom-0 z-0" resizeMode="cover"/>
+
+            <Modal animationType="none" transparent={true} visible={showEmailMenu} onRequestClose={() => setShowEmailMenu(false)}>
+                <EmailMenu visible={showEmailMenu} onClose={() => setShowEmailMenu(false)}/>
+            </Modal>
         </View>
     );
 }
