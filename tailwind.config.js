@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}",
+    './(auth)/**/*.{js,jsx,ts,tsx}'],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -22,7 +23,26 @@ module.exports = {
         'fontMain-bold': ['BarlowSemiCondensed-Bold', 'sans-serif'],
         'fontMain-extrabold': ['BarlowSemiCondensed-ExtraBold', 'sans-serif'],
         'fontMain-black': ['BarlowSemiCondensed-Black', 'sans-serif'],
-      }
+      },
+      fontSize: {
+        '10': '10px',
+        '12': '12px',
+        '14': '14px',
+        '16': '16px',
+        '18': '18px',
+        '20': '20px',
+        '22': '22px',
+        '24': '24px',
+        '26': '26px',
+        '28': '28px',
+        '30': '30px',
+        '32': '32px',
+        '34': '34px',
+        '36': '36px',
+        '38': '38px',
+        '40': '40px',
+        '42': '42px',
+      },
     },
   },
   plugins: [],

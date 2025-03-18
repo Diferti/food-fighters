@@ -1,7 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
 import {Pressable, View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import {Link} from "expo-router";
+import { Ionicons } from '@expo/vector-icons';
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function EmailMenu({ visible, onClose }: { visible: boolean; onClose: () => void }) {
     const slideAnim = useRef(new Animated.Value(400)).current;
@@ -70,7 +72,7 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
                     <View className="flex-1 items-center">
                         <Link href="/(auth)/sign-in" asChild>
                             <Pressable onPress={onClose} className="flex-row items-center h-[50px] bg-highlight rounded-[15px] active:opacity-50 justify-center w-[300px] mb-[20px]">
-                                <Ionicons name="mail" size={24} className="mr-3" />
+                                <Ionicons name="mail" size={26} className="mr-3 mt-1" />
                                 <Text className="font-fontMain-medium text-primary text-[22px]">
                                     Continue with Email
                                 </Text>
@@ -82,14 +84,14 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
                         </Text>
 
                         <Pressable className="flex-row items-center h-[50px] bg-blue-600 rounded-[15px] active:opacity-50 justify-center w-[300px] mb-[20px]">
-                            <Ionicons name="logo-google" size={24} color="white" className="mr-3" />
+                            <FontAwesome name="google-plus-square" size={26} color="white" className="mr-3 mt-[3px]" />
                             <Text className="font-fontMain-medium text-secondary text-[22px]">
                                 Continue with Google
                             </Text>
                         </Pressable>
 
                         <Pressable className="flex-row items-center h-[50px] bg-blue-800 rounded-[15px] active:opacity-50 justify-center w-[300px] mb-[20px]">
-                            <Ionicons name="logo-facebook" size={24} color="white" className="mr-3"/>
+                            <Entypo name="facebook" size={24} color="#ECEFF3" className="mr-3 mt-0.5"/>
                             <Text className="font-fontMain-medium text-secondary text-[22px]">
                                 Continue with Facebook
                             </Text>
