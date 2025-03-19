@@ -1,14 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { loginRequest } from '../routes/api';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const isFormFilled = email && password;
+
+    const handleSignIn = async () => {
+        if (!email || !password) {
+            Alert.alert('Error', 'Please fill in all fields');
+            return;
+        }
+
+        const result = await loginRequest(email, password);
+        if (result.error) {
+            Alert.alert('Error', result.error);
+            return;
+        }
+
+        await AsyncStorage.setItem('token', result.token);
+        router.push('/(tabs)/main');
+    };
 
     return (
         <SafeAreaView className="flex-1 p-5 bg-primary">
@@ -19,7 +40,7 @@ const SignIn = () => {
             </Link>
 
             <Text className="text-highlight text-[26px] font-fontHeader mb-[40px] text-center">
-                SIGN IN WITH EMAIL
+                SIGN IN
             </Text>
 
             <View className="flex-row items-center border-[2px] border-[#818493] rounded-[10px] px-4 h-[60px] bg-[#383A46] mb-[20px]">
@@ -27,7 +48,6 @@ const SignIn = () => {
                 <TextInput className="flex-1 text-[#CED0DC] text-18"
                     placeholder="Email or Username"
                     placeholderTextColor="#CED0DC"
-                    keyboardType="email-address"
                     autoCapitalize="none"
                     value={email}
                     onChangeText={setEmail}/>
@@ -46,11 +66,11 @@ const SignIn = () => {
                 </TouchableOpacity>
             </View>
 
-            <Link href="../(tabs)/main" asChild>
-                <TouchableOpacity className="bg-[#333B48] h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px]">
-                    <Text className="text-[#78818A] text-24 font-fontHeader pt-[7px]">Sign In</Text>
-                </TouchableOpacity>
-            </Link>
+            <TouchableOpacity 
+                onPress={handleSignIn} 
+                className={`h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px] ${isFormFilled ? 'bg-green-500' : 'bg-[#333B48]'}`}>
+                <Text className={`text-24 font-fontHeader pt-[7px] ${isFormFilled ? 'text-white' : 'text-[#78818A]'}`}>Sign In</Text>
+            </TouchableOpacity>
 
             <Link href="../" asChild>
                 <TouchableOpacity className="items-center active:opacity-50">
