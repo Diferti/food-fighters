@@ -51,7 +51,7 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
                 opacity: fadeAnim,
                 backgroundColor: 'rgba(0, 0, 0, 0.5)'
             }}>
-            <Pressable className="flex-1 justify-end" onPress={onClose}>
+            <Pressable className="flex-1 justify-end">
                 <Animated.View className="bg-dark-blue min-h-[500px] rounded-t-[30px] p-[20px]"
                     style={{
                         transform: [{ translateY: slideAnim }]

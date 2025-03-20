@@ -6,7 +6,9 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "types": ["expo", "react"],
+    "skipLibCheck": true
   },
   "include": [
     "**/*.ts",
