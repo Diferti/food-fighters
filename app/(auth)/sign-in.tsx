@@ -68,8 +68,8 @@ const SignIn = () => {
 
             <TouchableOpacity 
                 onPress={handleSignIn} 
-                className={`h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px] ${isFormFilled ? 'bg-green-500' : 'bg-[#333B48]'}`}>
-                <Text className={`text-24 font-fontHeader pt-[7px] ${isFormFilled ? 'text-secondary' : 'text-highlight'}`}>Sign In</Text>
+                className={`h-[60px] rounded-[10px] justify-center items-center active:opacity-50 mb-[20px] ${isFormFilled ? 'bg-highlight' : 'bg-[#333B48]'}`}>
+                <Text className={`text-24 font-fontHeader pt-[7px] ${isFormFilled ? 'text-primary' : 'text-[#78818A]'}`}>Sign In</Text>
             </TouchableOpacity>
 
             <Link href="../" asChild>

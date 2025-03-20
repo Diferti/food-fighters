@@ -25,8 +25,8 @@ export default function TabLayout() {
                                 delayLongPress={undefined}
                                 style={[
                                     styles.tabBarButton,
-                                    isDietTab && { marginRight: 30 },
-                                    isLeaderboardTab && { marginLeft: 30 },
+                                    isDietTab && { marginRight: 45 },
+                                    isLeaderboardTab && { marginLeft: 45 },
                                 ]}>
                                 {props.children}
                             </TouchableOpacity>
@@ -76,7 +76,7 @@ export default function TabLayout() {
             </Tabs>
 
             <TouchableOpacity style={styles.cameraButton} onPress={() => setIsCameraModalVisible(true)}>
-                <Ionicons name="camera" size={30} color="black" />
+                <Ionicons name="camera" size={34} color="black" />
             </TouchableOpacity>
 
             <CameraMenu isVisible={isCameraModalVisible} onClose={() => setIsCameraModalVisible(false)}/>

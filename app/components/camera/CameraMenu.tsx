@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Animated, Pressable, Modal, Image, ScrollView, 
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Link } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 interface CameraMenuProps {
     isVisible: boolean;
@@ -70,7 +70,7 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
+            allowsEditing: false,
             quality: 1,
         });
 
@@ -84,27 +84,19 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
     }
 
     return (
-        <Modal
-            animationType="fade"
-            transparent={true}
-            visible={isVisible}
-            onRequestClose={onClose}
-        >
-            <Pressable className="flex-1 bg-black/50">
-                <Animated.View
-                    className="w-full h-full absolute"
+        <Modal animationType="fade" transparent={true} visible={isVisible} onRequestClose={onClose}>
+            <Pressable className="flex-1 bg-primary/80">
+                <Animated.View className="w-full h-full absolute"
                     style={{
                         opacity: fadeAnim,
                         transform: [{ scale: scaleAnim }]
-                    }}
-                >
-                    {/* Camera Preview Area */}
-                    <View className="flex-1">
+                    }}>
+
+                    <View className="flex-1 items-center justify-center py-4 px-[25px]">
                         {selectedImage ? (
-                            <Image
-                                source={{ uri: selectedImage }}
-                                className="flex-1 resize-contain"
-                            />
+                            <View className="bg-primary rounded-[10px] overflow-hidden w-full max-w-md mb-[125px]">
+                                <Image source={{ uri: selectedImage }} className="w-full h-[525px] object-contain"/>
+                            </View>
                         ) : (
                             // <Camera
                             //     ref={cameraRef}
@@ -115,66 +107,51 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
                         )}
                     </View>
 
-                    {/* Button Container */}
                     <View className="absolute bottom-20 w-full px-8">
-                        {/* Action Buttons Row */}
-                        <View className="flex-row justify-between mb-8">
+                        <View className="flex-row justify-between mb-[50px]">
                             {!selectedImage ? (
                                 <>
-                                    {/* Take Photo Button */}
-                                    <View className="items-center">
-                                        <TouchableOpacity
-                                            className="bg-white/20 w-16 h-16 rounded-full items-center justify-center"
-                                            onPress={takePicture}
-                                        >
-                                            <Ionicons name="camera" size={32} color="white" />
+                                    <View className="items-center ml-[40px]">
+                                        <TouchableOpacity className="border-[2px] border-highlight w-[45px] h-[45px] rounded-full items-center justify-center"
+                                             onPress={takePicture}>
+                                            <Ionicons name="camera" size={24} color="#07BA4D" />
                                         </TouchableOpacity>
-                                        <Text className="text-white text-xs mt-2">Take Photo</Text>
+                                        <Text className="text-secondary text-[12px] mt-2">Take Photo</Text>
                                     </View>
 
-                                    {/* Choose Photo Button */}
-                                    <View className="items-center">
-                                        <TouchableOpacity
-                                            className="bg-white/20 w-16 h-16 rounded-full items-center justify-center"
-                                            onPress={pickImage}
-                                        >
-                                            <Ionicons name="image" size={32} color="white" />
+                                    <View className="items-center mr-[33px]">
+                                        <TouchableOpacity className="border-[2px] border-highlight w-[45px] h-[45px] rounded-full items-center justify-center"
+                                            onPress={pickImage}>
+                                            <Ionicons name="image" size={24} color="#07BA4D" />
                                         </TouchableOpacity>
-                                        <Text className="text-white text-xs mt-2">Choose Photo</Text>
+                                        <Text className="text-secondary text-[12px] mt-2">Choose Photo</Text>
                                     </View>
                                 </>
                             ) : (
                                 <>
-                                    {/* Retake Button */}
-                                    <View className="items-center">
-                                        <TouchableOpacity
-                                            className="bg-white/20 w-16 h-16 rounded-full items-center justify-center"
-                                            onPress={() => setSelectedImage(null)}
-                                        >
-                                            <Ionicons name="refresh" size={32} color="white" />
+                                    <View className="items-center ml-[47px]">
+                                        <TouchableOpacity className="border-[2px] border-highlight w-[45px] h-[45px] rounded-full items-center justify-center"
+                                            onPress={() => setSelectedImage(null)}>
+                                            <MaterialCommunityIcons name="camera-retake" size={24} color="#07BA4D" />
                                         </TouchableOpacity>
-                                        <Text className="text-white text-xs mt-2">Retake</Text>
+                                        <Text className="text-secondary text-[12px] mt-2">Retake</Text>
                                     </View>
 
-                                    {/* Analyze Button */}
-                                    <View className="items-center">
+                                    <View className="items-center mr-[50px]">
                                         <Link href={{ pathname: '/(img)/analysis', params: { photoUri: selectedImage } }} asChild>
-                                            <TouchableOpacity className="bg-green-500 w-16 h-16 rounded-full items-center justify-center" onPress={onClose}>
-                                                <Ionicons name="analytics" size={32} color="white" />
+                                            <TouchableOpacity className="bg-highlight w-[45px] h-[45px] rounded-full items-center justify-center" onPress={onClose}>
+                                                <MaterialIcons name="query-stats" size={30} color="#121A27" />
                                             </TouchableOpacity>
                                         </Link>
-                                        <Text className="text-white text-xs mt-2">Analyze</Text>
+                                        <Text className="text-secondary text-[12px] mt-2">Analyze</Text>
                                     </View>
                                 </>
                             )}
                         </View>
 
-                        {/* Close Button (Icon only) */}
-                        <TouchableOpacity
-                            className="absolute -bottom-4 self-center bg-red-500 w-12 h-12 rounded-full items-center justify-center"
-                            onPress={onClose}
-                        >
-                            <Ionicons name="close" size={28} color="white" />
+                        <TouchableOpacity className="absolute -bottom-[30px] self-center bg-highlight w-[60px] h-[60px] rounded-full items-center justify-center"
+                            onPress={onClose}>
+                            <Ionicons name="close" size={38} color="#121A27" />
                         </TouchableOpacity>
                     </View>
                 </Animated.View>
