@@ -158,7 +158,7 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
 
                                     {/* Analyze Button */}
                                     <View className="items-center">
-                                        <Link href={{ pathname: '/', params: { photoUri: selectedImage } }} asChild>
+                                        <Link href={{ pathname: '/(img)/analysis', params: { photoUri: selectedImage } }} asChild>
                                             <TouchableOpacity className="bg-green-500 w-16 h-16 rounded-full items-center justify-center" onPress={onClose}>
                                                 <Ionicons name="analytics" size={32} color="white" />
                                             </TouchableOpacity>
