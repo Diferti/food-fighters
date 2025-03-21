@@ -54,7 +54,7 @@ const FriendsScreen: React.FC = () => {
     const [copiedText, setCopiedText] = React.useState('');
 
     const copyToClipboard = async () => {
-        await Clipboard.setStringAsync('hello world');
+        await Clipboard.setStringAsync(friendCode);
     };
 
     return (
@@ -65,7 +65,7 @@ const FriendsScreen: React.FC = () => {
             <View className="flex-1 mr-2 items-center">
             <Text className="text-secondary text-xl font-bold mb-2">Your Friend Code</Text>
             <View className="flex-row items-center bg-primary p-2 rounded">
-                <Text className="text-secondary text-lg mr-2">578438952</Text>
+                <Text className="text-secondary text-lg mr-2">{friendCode}</Text>
                 <TouchableOpacity onPress={() => {
                     copyToClipboard();
                 }}>
