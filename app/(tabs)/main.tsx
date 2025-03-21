@@ -6,7 +6,7 @@ const Main = () => {
     return (
         <BackgroundWrapper>
             <SafeAreaView>
-                <View className="p-4">
+                <View className="p-4 mt-[50px]">
                     <Text className="text-white text-2xl">Main Content</Text>
                 </View>
             </SafeAreaView>

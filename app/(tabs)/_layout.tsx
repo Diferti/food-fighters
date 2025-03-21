@@ -3,12 +3,15 @@ import { Tabs } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import CameraMenu from "@/app/components/camera/CameraMenu";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
+import TopBar from "@/app/components/TopBar";
 
 export default function TabLayout() {
     const [isCameraModalVisible, setIsCameraModalVisible] = useState(false);
+    const [balance, setBalance] = useState(1999999);
 
     return (
         <View style={styles.container}>
+            <TopBar balance={balance} />
             <Tabs
                 screenOptions={({ navigation, route,}) => ({
                     tabBarActiveTintColor: '#07BA4D',
