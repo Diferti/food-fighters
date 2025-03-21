@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const API_URL = 'https://food-fighters-server-production.up.railway.app/api';
 
 export const loginRequest = async (username: string, password: string) => {
@@ -66,12 +68,37 @@ export const checkUsernameRequest = async (username: string) => {
     }
 };
 
+export const getUserDataRequest = async () => {
+    const token = await AsyncStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/users/data`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to get user data');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+}
+
 export const getProfileByUsernameRequest = async (username: string) => {
+    const token = await AsyncStorage.getItem('token');
     try {
         const response = await fetch(`${API_URL}/users/profile/${username}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
         });
 
@@ -87,12 +114,14 @@ export const getProfileByUsernameRequest = async (username: string) => {
     }
 };
 
-export const updateProfileRequest = async (username: string, profileData: any) => {
+export const updateProfileRequest = async (profileData: any) => {
+    const token = await AsyncStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/users/profile/${username}`, {
+        const response = await fetch(`${API_URL}/users/update-profile`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             body: JSON.stringify(profileData),
         });
@@ -109,12 +138,14 @@ export const updateProfileRequest = async (username: string, profileData: any) =
     }
 };
 
-export const addFriendRequest = async (username: string, friendUsername: string) => {
+export const addFriendRequest = async (friendUsername: string) => {
+    const token = await AsyncStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/users/${username}/friends`, {
+        const response = await fetch(`${API_URL}/users/add-friend`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             body: JSON.stringify({ friendUsername }),
         });
@@ -131,12 +162,39 @@ export const addFriendRequest = async (username: string, friendUsername: string)
     }
 };
 
-export const sendFriendRequestRequest = async (username: string, friendUsername: string) => {
+export const declineFriendRequest = async (friendUsername: string) => {
+    const token = await AsyncStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/users/${username}/friend-requests`, {
+        const response = await fetch(`${API_URL}/users/decline-friend-request`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
+            },
+            body: JSON.stringify({ friendUsername }),
+        });
+
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+};
+
+
+export const sendFriendRequestRequest = async (friendUsername: string) => {
+    const token = await AsyncStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/users/send-friend-request`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             body: JSON.stringify({ friendUsername }),
         });
@@ -153,12 +211,14 @@ export const sendFriendRequestRequest = async (username: string, friendUsername:
     }
 };
 
-export const getFriendsRequest = async (username: string) => {
+export const getFriendsRequest = async () => {
+    const token = await AsyncStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/users/${username}/friends`, {
+        const response = await fetch(`${API_URL}/users/friends`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
         });
 
@@ -174,12 +234,38 @@ export const getFriendsRequest = async (username: string) => {
     }
 };
 
-export const getLeaderboardRequest = async (skip: number = 0, limit: number = 100, friendsOnly: boolean = false) => {
+
+export const getFriendRequestsRequest = async () => {
+    const token = await AsyncStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/leaderboard?skip=${skip}&limit=${limit}&friendsOnly=${friendsOnly}`, {
+        const response = await fetch(`${API_URL}/users/get-friend-requests`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to get friend requests');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+}
+
+export const getLeaderboardRequest = async (skip: number = 0, limit: number = 100, friendsOnly: boolean = false) => {
+    const token = await AsyncStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/users/leaderboard?skip=${skip}&limit=${limit}&friendsOnly=${friendsOnly}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
         });
 
