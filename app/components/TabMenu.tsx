@@ -15,18 +15,38 @@ const Tab = createMaterialTopTabNavigator();
 
 const TabMenu: React.FC<TabMenuProps> = ({ tabs }) => {
 const screenOptions: MaterialTopTabNavigationOptions = {
-    tabBarLabelStyle: { fontSize: 24, fontWeight: 'bold' },
-    tabBarStyle: { backgroundColor: '#1e1e1e' },
-    tabBarActiveTintColor: 'white',
-    tabBarInactiveTintColor: 'gray',
-    tabBarIndicatorStyle: { 
-        backgroundColor: 'green',
-        height: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+    tabBarLabelStyle: {
+        fontSize: 26,
+        fontFamily: 'Luckiest Guy',
+        alignContent: 'center'},
+    tabBarStyle: {
+        backgroundColor: '#182335',
+        marginTop: 45,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        margin: 2,
+        height: 70,
+        marginLeft: 15,
+        marginRight: 15,
+        paddingTop: 7,
+        alignItems: 'center',
+        borderColor: '#07BA4D',
+        borderBottomWidth: 1,
+    },
+    tabBarActiveTintColor: '#ECEFF3',
+    tabBarInactiveTintColor: '#818795',
+    tabBarIndicatorStyle: {
+        backgroundColor: '#1E4C40',
+        height: '100%',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderColor: '#07BA4D',
+        borderTopWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
     },
 };
 
