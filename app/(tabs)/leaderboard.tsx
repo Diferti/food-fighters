@@ -56,12 +56,11 @@ const GlobalLeaderboard: React.FC = () => {
     const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
 
     const fetchLeaderboard = async () => {
-        try {
-            const data = await getLeaderboardRequest();
-            setLeaderboardData(data);
-        } catch (error) {
-            console.error('Failed to fetch leaderboard data:', error);
+        const data = await getLeaderboardRequest(0, 100, false);
+        if (data.error) {
+            return;
         }
+        setLeaderboardData(data);
     };
 
     useEffect(() => {
@@ -72,7 +71,7 @@ const GlobalLeaderboard: React.FC = () => {
 
     return (
         <View className="flex-1 px-[15px] pt-0 bg-primary">
-            <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px]'>
+            <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px] overflow-hidden'>
                 <View className="border-b border-tertiary/50 bg-[#131C2A] py-[10px]">
                     <Text className="text-highlight text-[20px] font-fontMain-bold my-2 text-center"
                           style={{textShadowColor: 'rgba(7, 186, 77, 0.3)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 2}}>
@@ -93,12 +92,11 @@ const FriendsLeaderboard: React.FC = () => {
     const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
 
     const fetchLeaderboard = async () => {
-        try {
-            const data = await getLeaderboardRequest(0, 100, true);
-            setLeaderboardData(data);
-        } catch (error) {
-            console.error('Failed to fetch leaderboard data:', error);
+        const data = await getLeaderboardRequest(0, 100, true);
+        if (data.error) {
+            return;
         }
+        setLeaderboardData(data);
     };
 
     useEffect(() => {
@@ -109,7 +107,7 @@ const FriendsLeaderboard: React.FC = () => {
 
     return (
     <View className="flex-1 px-[15px] pt-0 bg-primary">
-        <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px]'>
+        <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px] overflow-hidden'>
             <View className="border-b border-tertiary/50 bg-[#131C2A] py-[10px]">
                 <Text className="text-highlight text-[20px] font-fontMain-bold my-2 text-center"
                       style={{textShadowColor: 'rgba(7, 186, 77, 0.3)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 2}}>

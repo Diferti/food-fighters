@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import CameraMenu from "@/app/components/camera/CameraMenu";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import TopBar from "@/app/components/TopBar";
 
+import { getUserDataRequest } from "@/app/routes/api";
+
 export default function TabLayout() {
     const [isCameraModalVisible, setIsCameraModalVisible] = useState(false);
-    const [balance, setBalance] = useState(1999999);
+    const [balance, setBalance] = useState(0);
+
+    const fetchUserData = async () => {
+        const data = await getUserDataRequest();
+        setBalance(data.points);
+    }
+
+    useEffect(() => {
+        fetchUserData();
+        const interval = setInterval(fetchUserData, 10000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <View style={styles.container}>

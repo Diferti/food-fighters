@@ -51,8 +51,6 @@ const FriendsScreen: React.FC = () => {
         }
     };
 
-    const [copiedText, setCopiedText] = React.useState('');
-
     const copyToClipboard = async () => {
         await Clipboard.setStringAsync(friendCode);
     };

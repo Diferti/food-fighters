@@ -21,7 +21,7 @@ const TopBar: React.FC<TopBarProps> = ({ balance }) => {
                 <View className="flex-row items-center justify-center">
                     <View className="flex-row items-center h-auto py-1 px-2 bg-[#293953] border-[1px] border-[#182335] rounded-[5px] mr-[30px]">
                         <Image source={require('../../assets/images/icons/coin.png')} className="w-4 h-4 mr-1" resizeMode="contain"/>
-                        <Text className="text-secondary text-[16px] font-fontMain-bold">{balance.toLocaleString()}</Text>
+                        <Text className="text-secondary text-[16px] font-fontMain-bold">{balance?.toLocaleString()}</Text>
                     </View>
 
                     <TouchableOpacity className="flex-row items-center py-1 px-2 bg-[#293953] border-[1px] border-[#182335] rounded-[5px]">

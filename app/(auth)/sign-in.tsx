@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginRequest } from '../routes/api';
 
 const SignIn = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('1');
+    const [password, setPassword] = useState('1');
     const [showPassword, setShowPassword] = useState(false);
 
     const isFormFilled = email && password;

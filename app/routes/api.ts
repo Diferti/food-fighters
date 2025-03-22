@@ -200,7 +200,8 @@ export const sendFriendRequestRequest = async (friendUsername: string) => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to send friend request');
+            const text = await response.text();
+            throw new Error('Failed to send friend request: ' + text);
         }
 
         const data = await response.json();
