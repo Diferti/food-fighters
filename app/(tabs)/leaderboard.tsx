@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import BackgroundWrapper from '../components/BackgroundWrapper';
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -6,16 +5,47 @@ import { LinearGradient } from 'expo-linear-gradient';
 import TabMenu from '../components/TabMenu';
 import React from "react";
 
-import { getLeaderboardRequest } from '../routes/api';
+const leaderboardData = [
+    { id: 1, name: 'Diferti', persistentPoints: 1999999, rank: 1 },
+    { id: 2, name: 'Diferti', persistentPoints: 5000, rank: 5 },
+    { id: 3, name: 'Diferti', persistentPoints: 2000, rank: 6 },
+    { id: 4, name: 'Diferti', persistentPoints: 10000, rank: 4 },
+    { id: 5, name: 'Diferti', persistentPoints: 1000, rank: 7 },
+    { id: 6, name: 'Diferti', persistentPoints: 20000, rank: 3 },
+    { id: 7, name: 'Diferti', persistentPoints: 50000, rank: 2 },
+];
 
-interface LeaderboardEntry {
-    id: string;
-    username: string;
-    persistentPoints: number;
-    rank: number;
+interface LeaderboardItemProps {
+    item: {
+        id: number;
+        name: string;
+        persistentPoints: number;
+        rank: number;
+        image?: string;
+    };
 }
 
-const LeaderboardItem = ({ id, username, persistentPoints, rank }: LeaderboardEntry) => (
+const TIER_THRESHOLDS = {
+    LEGENDARY: 100000,
+    GRANDMASTER: 50000,
+    MASTER: 20000,
+    DIAMOND: 10000,
+    GOLD: 5000,
+    SILVER: 1000,
+    COPPER: 0,
+};
+
+const getTierImage = (points: number) => {
+    if (points >= TIER_THRESHOLDS.LEGENDARY) return require('../../assets/images/legues/legendary.png');
+    if (points >= TIER_THRESHOLDS.GRANDMASTER) return require('../../assets/images/legues/grandmaster.png');
+    if (points >= TIER_THRESHOLDS.MASTER) return require('../../assets/images/legues/master.png');
+    if (points >= TIER_THRESHOLDS.DIAMOND) return require('../../assets/images/legues/diamond.png');
+    if (points >= TIER_THRESHOLDS.GOLD) return require('../../assets/images/legues/gold.png');
+    if (points >= TIER_THRESHOLDS.SILVER) return require('../../assets/images/legues/silver.png');
+    return require('../../assets/images/legues/copper.png');
+};
+
+const LeaderboardItem = ({ item }: LeaderboardItemProps) => (
     <View style={{
             shadowColor: 'rgba(7, 186, 77, 0.3)',
             shadowOffset: { width: 3, height: 3 },
@@ -31,83 +61,40 @@ const LeaderboardItem = ({ id, username, persistentPoints, rank }: LeaderboardEn
             style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                padding: 8,
+                padding: 12,
                 borderRadius: 10,
                 marginBottom: 12,
                 height: 70,
             }}>
-            <Image source={{ uri: 'https://fastly.picsum.photos/id/227/200/200.jpg?hmac=_HAD3ZQuIUMd1tjQfU5i21RCLHRDH_r_Xuq0q6iRN-o' }}
-                   className="w-[50px] h-[50px] border border-highlight rounded-[5px]" />
+            {item.image ? (
+                <Image source={{ uri: item.image }} className="w-[50px] h-[50px] border border-highlight rounded-[5px]"/>
+            ) : (
+                <View className="w-[50px] h-[50px] border border-highlight rounded-[5px] bg-[#2D4263] justify-center items-center">
+                    <Image source={require('../../assets/images/icons/user-image.png')} className="w-[30px] h-[30px]"/>
+                </View>
+            )}
             <View className="flex-1 ml-[15px] justify-center">
-                <Text className="text-secondary text-[20px] font-fontMain-bold mb-[3px]">{username}</Text>
+                <Text className="text-secondary text-[20px] font-fontMain-bold mb-[3px]">{item.name}</Text>
                 <View className="flex-row items-center">
                     <Image source={require('../../assets/images/icons/gem.png')}  className="w-[18px] h-[18px] mr-[5px] mt-[2px]" />
-                    <Text className="text-secondary text-[16px] font-fontMain-bold">{persistentPoints}</Text>
+                    <Text className="text-secondary text-[16px] font-fontMain-bold">{item.persistentPoints}</Text>
                 </View>
             </View>
-            <View className="flex-row border border-highlight/30 p-1 pr-10 pl-10 rounded-br-[15px] rounded-tl-[15px] bg-[#202D43]">
-                <Text className="text-highlight text-lg text-center font-bold"># {rank}</Text>
+
+            <View className="flex-row mr-[15px]">
+                <Image source={getTierImage(item.persistentPoints)} className="h-[50px] w-[65px]" />
+            </View>
+
+            <View className="flex-row border border-highlight/30 p-1 pr-[25px] pl-[25px] rounded-br-[15px] rounded-tl-[15px] bg-[#202D43]">
+                <Text className="text-highlight text-lg text-center font-bold"># {item.rank}</Text>
             </View>
         </LinearGradient>
     </View>
 );
 
-const GlobalLeaderboard: React.FC = () => {
-    const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
-
-    const fetchLeaderboard = async () => {
-        const data = await getLeaderboardRequest(0, 100, false);
-        if (data.error) {
-            return;
-        }
-        setLeaderboardData(data);
-    };
-
-    useEffect(() => {
-        fetchLeaderboard();
-        const interval = setInterval(fetchLeaderboard, 10000);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <View className="flex-1 px-[15px] pt-0 bg-primary">
-            <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px] overflow-hidden'>
-                <View className="border-b border-tertiary/50 bg-[#131C2A] py-[10px]">
-                    <Text className="text-highlight text-[20px] font-fontMain-bold my-2 text-center"
-                          style={{textShadowColor: 'rgba(7, 186, 77, 0.3)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 2}}>
-                        Leaderboard
-                    </Text>
-                </View>
-                <ScrollView className="p-4">
-                    {leaderboardData.sort((a, b) => a.rank - b.rank).map(item => (
-                        <LeaderboardItem key={item.id} id={item.id} username={item.username} persistentPoints={item.persistentPoints} rank={item.rank} />
-                    ))}
-                </ScrollView>
-            </View>
-        </View>
-    );
-};
-
-const FriendsLeaderboard: React.FC = () => {
-    const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
-
-    const fetchLeaderboard = async () => {
-        const data = await getLeaderboardRequest(0, 100, true);
-        if (data.error) {
-            return;
-        }
-        setLeaderboardData(data);
-    };
-
-    useEffect(() => {
-        fetchLeaderboard();
-        const interval = setInterval(fetchLeaderboard, 10000);
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
+const GlobalLeaderboard: React.FC = () => (
     <View className="flex-1 px-[15px] pt-0 bg-primary">
-        <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px] overflow-hidden'>
+        <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px]'>
             <View className="border-b border-tertiary/50 bg-[#131C2A] py-[10px]">
                 <Text className="text-highlight text-[20px] font-fontMain-bold my-2 text-center"
                       style={{textShadowColor: 'rgba(7, 186, 77, 0.3)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 2}}>
@@ -116,12 +103,30 @@ const FriendsLeaderboard: React.FC = () => {
             </View>
             <ScrollView className="p-4">
                 {leaderboardData.sort((a, b) => a.rank - b.rank).map(item => (
-                    <LeaderboardItem key={item.id} id={item.id} username={item.username} persistentPoints={item.persistentPoints} rank={item.rank} />
+                    <LeaderboardItem key={item.id} item={item} />
                 ))}
             </ScrollView>
         </View>
     </View>
-)};
+);
+
+const FriendsLeaderboard: React.FC = () => (
+    <View className="flex-1 px-[15px] pt-0 bg-primary">
+        <View className='bg-dark-blue h-full border-highlight border-x-[1px] border-b-[1px] rounded-b-[30px]'>
+            <View className="border-b border-tertiary/50 bg-[#131C2A] py-[10px]">
+                <Text className="text-highlight text-[20px] font-fontMain-bold my-2 text-center"
+                      style={{textShadowColor: 'rgba(7, 186, 77, 0.3)', textShadowOffset: { width: -1, height: 1 }, textShadowRadius: 2}}>
+                    Leaderboard
+                </Text>
+            </View>
+            <ScrollView className="p-4">
+                {leaderboardData.filter(item => item.rank <= 5).map(item => (
+                    <LeaderboardItem key={item.id} item={item} />
+                ))}
+            </ScrollView>
+        </View>
+    </View>
+);
 
 const Leaderboard: React.FC = () => {
     const tabs = [
