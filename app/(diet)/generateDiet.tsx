@@ -198,8 +198,8 @@ const GenerateDiet = () => {
                 <View className="bg-dark-blue p-4 border border-highlight/30 rounded-[15px]">
                     <Text className="text-[20px] font-fontMain-bold text-highlight">Food Preferences</Text>
                     <View className="space-y-6">
-                        <TagInput label="Favorite Foods" values={loveProducts} setValues={setLoveProducts} colorClass="bg-highlight/90"/>
-                        <TagInput label="Avoid Foods" values={unlovedProducts} setValues={setUnlovedProducts} colorClass="bg-[#F87171]"/>
+                        <TagInput label="Favorite Food" values={loveProducts} setValues={setLoveProducts} colorClass="bg-highlight/90"/>
+                        <TagInput label="Avoid Food" values={unlovedProducts} setValues={setUnlovedProducts} colorClass="bg-[#F87171]"/>
                     </View>
                 </View>
 

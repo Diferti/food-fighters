@@ -29,7 +29,7 @@ const screenOptions: MaterialTopTabNavigationOptions = {
         height: 70,
         marginLeft: 15,
         marginRight: 15,
-        paddingTop: 7,
+        paddingTop: 10,
         alignItems: 'center',
         borderColor: '#07BA4D',
         borderBottomWidth: 1,
