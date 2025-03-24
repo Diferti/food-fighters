@@ -214,7 +214,7 @@ export const DietDescription = ({ dietPlan }: any) => {
             <View className="flex-col">
                 <View className="flex-2">
                     {(currentDayData?.meals || [])
-                        .sort((a: any, b: any) => (a?.time || '').localeCompare(b?.time || ''))
+                        .sort((a: any, b: any) => (a?.time.substring(0, a?.time.indexOf(':')) || 0) - (b?.time.substring(0, b?.time.indexOf(':')) || 0))
                         .map((meal: any, index: number) => (
                             <MealCard key={`${meal?.mealType}-${index}`} meal={meal} />
                         ))}
