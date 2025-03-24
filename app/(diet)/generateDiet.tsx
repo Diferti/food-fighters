@@ -195,9 +195,11 @@ const GenerateDiet = () => {
                 </View>
 
                 <View className="items-center mt-[20px]">
-                    <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50">
-                        <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">GENERATE</Text>
-                    </TouchableOpacity>
+                    <Link href={{ pathname: '/(diet)/showDiet'}} asChild>
+                        <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50">
+                            <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">GENERATE</Text>
+                        </TouchableOpacity>
+                    </Link>
                 </View>
             </ScrollView>
         </SafeAreaView>
