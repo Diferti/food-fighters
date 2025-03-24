@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ImageSourcePropType } from 'react-native';
 import BackgroundWrapper from '../components/BackgroundWrapper';
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from 'expo-linear-gradient';
 import { getUserDataRequest } from '../routes/api';
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+
+import { getTierImage } from '../tiers';
 
 const Main = () => {
     const [username, setUsername] = React.useState('');
@@ -22,6 +24,20 @@ const Main = () => {
         };
 
         fetchUserData();
+    }, []);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const data = await getUserDataRequest();
+            setPoints(data.points);
+            setPersistentPoints(data.persistentPoints);
+        };
+
+        const interval = setInterval(() => {
+            fetchUserData();
+        }, 5000);
+
+        return () => clearInterval(interval);
     }, []);
 
     return (
@@ -93,7 +109,7 @@ const Main = () => {
                         </View>
 
                         <View className="flex-row items-center justify-center flex-[1] pl-[15px]">
-                            <Image source={require('../../assets/images/legues/legendary.png')} className="w-[30px] h-[30px] mr-[7px]" />
+                            <Image source={getTierImage(persistentPoints)} className="w-[30px] h-[30px] mr-[7px]" />
                             <Text className="text-highlight text-[26px] font-fontMain-bold">{persistentPoints}</Text>
                         </View>
                     </View>
