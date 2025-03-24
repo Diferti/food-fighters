@@ -3,21 +3,10 @@ import { Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-nativ
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import MealIcon from "@/app/components/diet/MealIcon";
 
 const MEAL_OPTIONS = ['Breakfast', 'Brunch', 'Lunch', 'Snack', 'Dinner', 'Supper'];
 const MEAL_ORDER = ['Breakfast', 'Brunch', 'Lunch', 'Snack', 'Dinner', 'Supper'];
-
-const getMealIcon = (meal: string) => {
-    switch (meal) {
-        case 'Breakfast': return '🥞';
-        case 'Brunch': return '🥐';
-        case 'Lunch': return '🥗';
-        case 'Snack': return '🍎';
-        case 'Dinner': return '🍽️';
-        case 'Supper': return '🍵';
-        default: return '🍴';
-    }
-};
 
 const DaysInput = ({ onDaysChange }: { onDaysChange: (days: number) => void }) => {
     const [days, setDays] = useState(1);
@@ -162,7 +151,9 @@ const GenerateDiet = () => {
                                             : 'border-highlight'
                                     }`} style={{ position: 'relative' }}>
                                     <View className="flex-row items-center gap-2">
-                                        <Text className={`text-lg`}>{getMealIcon(meal)}</Text>
+                                        <Text className={`text-lg`}>
+                                            <MealIcon type={meal} />
+                                        </Text>
                                         <Text className={`text-[16px] font-fontMain-bold ${isSelected ? 'text-highlight font-fontMain-extrabold' : 'text-secondary'}`}>{meal}</Text>
                                     </View>
                                     {isSelected && (
