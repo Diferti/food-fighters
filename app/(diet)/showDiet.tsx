@@ -14,7 +14,7 @@ const fakeDietPlan = {
                 {
                     mealType: 'Breakfast',
                     time: '8:00',
-                    preparation: 'Scramble eggs with spinach and tomatoes. Serve with whole grain toast.',
+                    preparation: 'Scramble eggs with spinach and tomatoes. Serve with whole grain toast. gwuiuhguiwhegfuinbweuigniujweguiwehngijwneijgnweiugniuwjengiwengijwenigjnwejignwijengjiwengwneigjwnejignji',
                     items: [
                         {
                             food: 'Eggs',
@@ -135,7 +135,7 @@ const ShowDiet = () => {
             <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
                 <DietDescription dietPlan={fakeDietPlan}/>
 
-                <View className="items-center mt-[20px]">
+                <View className="items-center">
                     <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50">
                         <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">SAVE</Text>
                     </TouchableOpacity>

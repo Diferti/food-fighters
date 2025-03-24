@@ -31,47 +31,23 @@ const PreparationSection = ({ meal }: any) => {
     const { protein, carbs, fat, fiber } = calculateMealTotals(meal);
 
     return (
-        <View>
-            <View className="flex-row items-center gap-1 mb-3 justify-center lg:justify-start">
-                <Text className="text-2xl">📝</Text>
-                <Text className="text-xl font-extrabold font-fontHeader text-secondary">Preparation Steps</Text>
+        <View className='bg-[#10382E] p-2.5 mb-[10x] border border-primary rounded-[10px]'>
+            <View className="flex-row items-center gap-[5px] mb-[10px] justify-center">
+                <Text className="text-[20px]">📝</Text>
+                <Text className="text-[20px] font-fontMain-bold text-secondary">Preparation Steps</Text>
             </View>
-            <Text className="text-primary/80 leading-relaxed bg-primary/10 p-3 rounded-lg font-fontMain font-bold">
+            <Text className="text-[16px] text-highlight leading-relaxed bg-highlight/20 p-[10px] rounded-[10px] font-fontMain-bold">
                 {meal?.preparation || 'No preparation instructions.'}
             </Text>
 
-            <View className="mt-6 flex-row gap-4">
-                <View className="flex-1 space-y-4">
-                    <NutritionStats
-                        label="Protein"
-                        value={protein}
-                        max={40}
-                        color="bg-[#F87171]"
-                        icon="🥩"
-                    />
-                    <NutritionStats
-                        label="Carbs"
-                        value={carbs}
-                        max={60}
-                        color="bg-[#FACC15]"
-                        icon="🍞"
-                    />
+            <View className="my-[10px] flex-row gap-[20px] mx-[10px]">
+                <View className="flex-1">
+                    <NutritionStats label="Protein" value={protein} max={40} color="bg-[#F87171]" icon="🥩"/>
+                    <NutritionStats label="Carbs" value={carbs} max={60} color="bg-[#FACC15]" icon="🍞"/>
                 </View>
-                <View className="flex-1 space-y-4">
-                    <NutritionStats
-                        label="Fat"
-                        value={fat}
-                        max={30}
-                        color="bg-[#60A5FA]"
-                        icon="🥑"
-                    />
-                    <NutritionStats
-                        label="Fiber"
-                        value={fiber}
-                        max={25}
-                        color="bg-[#4ADE80]"
-                        icon="🌿"
-                    />
+                <View className="flex-1">
+                    <NutritionStats label="Fat" value={fat} max={30} color="bg-[#60A5FA]" icon="🥑"/>
+                    <NutritionStats label="Fiber" value={fiber} max={25} color="bg-[#4ADE80]" icon="🌿"/>
                 </View>
             </View>
         </View>
@@ -108,36 +84,36 @@ const MealCard = ({ meal }: any) => {
             </TouchableOpacity>
 
             {expanded && (
-                <View className="mt-4 pt-4 border-t border-primary/20">
-                    <View className="flex-col md:flex-row gap-4">
-                        <View className="flex-1">
-                            <View className="flex-row items-center justify-center gap-1 mb-3">
-                                <Text className="text-2xl">🍴</Text>
-                                <Text className="text-xl font-extrabold font-fontHeader text-secondary">
+                <View className="mt-[10px]">
+                    <View className="flex-col md:flex-row gap-[10px]">
+                        <View className="flex-1 border-[2px] border-highlight/30 rounded-[10px] pb-[15px] bg-highlight/30">
+                            <View className="flex-row items-center justify-center gap-[5px] rounded-t-[8px] py-[10px]">
+                                <Text className="text-[20px]">🍱</Text>
+                                <Text className="text-[20px] font-fontMain-bold text-secondary">
                                     Meal Composition
                                 </Text>
                             </View>
                             {(meal?.items || []).map((item: any) => (
-                                <View key={item?.food} className="py-2 border-b border-primary/70">
+                                <View key={item?.food} className="px-[10px] py-2 border-b-[2px] border-highlight/30 bg-dark-blue">
                                     <View className="flex-row justify-between">
-                                        <Text className="text-base font-bold font-fontMain text-secondary">
+                                        <Text className="text-[16px] font-fontMain-bold text-secondary">
                                             {item?.food || 'N/A'}
                                         </Text>
-                                        <Text className="text-base font-bold font-fontMain text-primary/70">
+                                        <Text className="text-[16px] font-fontMain-bold text-secondary">
                                             {item?.quantity || '--'}
                                         </Text>
                                     </View>
                                     <View className="flex-row gap-2">
-                                        <Text className="text-sm font-bold font-fontMain text-primary/70">
+                                        <Text className="text-[14px] font-fontMain-bold text-highlight">
                                             🥩 {item?.nutrients?.protein || 0}g
                                         </Text>
-                                        <Text className="text-sm font-bold font-fontMain text-primary/70">
+                                        <Text className="text-[14px] font-fontMain-bold text-highlight">
                                             🍞 {item?.nutrients?.carbs || 0}g
                                         </Text>
-                                        <Text className="text-sm font-bold font-fontMain text-primary/70">
+                                        <Text className="text-[14px] font-fontMain-bold text-highlight">
                                             🥑 {item?.nutrients?.fat || 0}g
                                         </Text>
-                                        <Text className="text-sm font-bold font-fontMain text-primary/70">
+                                        <Text className="text-[14px] font-fontMain-bold text-highlight">
                                             🌿 {item?.nutrients?.fiber || 0}g
                                         </Text>
                                     </View>
@@ -164,68 +140,47 @@ const DailySummary = ({ day }: any) => {
     }, { protein: 0, carbs: 0, fat: 0, fiber: 0 });
 
     return (
-        <View className="bg-pageColor p-2.5 mb-6 border border-primary rounded-xl shadow-lg">
-            <View className="flex-row items-center gap-1 mb-4 justify-center">
-                <Text className="text-2xl">📊</Text>
-                <Text className="text-2xl font-extrabold font-fontHeader text-secondary">
+        <View className="bg-dark-blue mb-[10px] border border-highlight rounded-[10px] p-[15px]">
+            <View className="flex-row items-center gap-[5px] justify-center mb-[15px]">
+                <Text className="text-[20px]">📊</Text>
+                <Text className="text-[20px] font-fontHeader text-secondary pt-[6px]">
                     Daily Nutrition
                 </Text>
             </View>
 
-            <View className="space-y-4">
-                <View className="flex-row gap-4 mb-4">
-                    <View className="bg-primary/5 p-3 rounded-lg flex-1">
-                        <View className="flex-row justify-center items-center gap-1">
-                            <Text className="text-xl">🍴</Text>
-                            <Text className="text-sm font-bold font-fontHeader text-primary/80">
+            <View>
+                <View className="flex-row gap-[15px]">
+                    <View className="bg-highlight/30 p-[10px] rounded-[10px] flex-1 justify-center items-center">
+                        <View className="flex-row justify-center items-center mb-[5px]">
+                            <Text className="text-[16px]">🍴</Text>
+                            <Text className="text-[16px] font-fontMain-bold text-highlight">
                                 Total Calories
                             </Text>
                         </View>
-                        <Text className="text-xl font-extrabold font-fontMain text-secondary text-center">
+                        <Text className="text-[20px] font-fontMain-extrabold text-secondary text-center">
                             {day?.daySummary?.totalCalories || 'N/A'} kcal
                         </Text>
                     </View>
-                    <View className="bg-primary/5 p-3 rounded-lg flex-1">
-                        <View className="flex-row justify-center items-center gap-1">
-                            <Text className="text-xl">⏳</Text>
-                            <Text className="text-sm font-bold font-fontHeader text-primary/80">
+                    <View className="bg-highlight/30 p-[10px] rounded-[10px] flex-1 justify-center items-center">
+                        <View className="flex-row justify-center items-center mb-[5px]">
+                            <Text className="text-[16px]">⏳</Text>
+                            <Text className="text-[16px] font-fontMain-bold text-highlight">
                                 Eating Window
                             </Text>
                         </View>
-                        <Text className="text-xl font-extrabold font-fontMain text-secondary text-center">
+                        <Text className="text-[20px] font-fontMain-extrabold text-secondary text-center">
                             {day?.daySummary?.eatingWindow || 'N/A'}
                         </Text>
                     </View>
                 </View>
 
-                <NutritionStats
-                    label="Protein"
-                    value={totals.protein}
-                    max={150}
-                    color="bg-[#F87171]"
-                    icon="🥩"
-                />
-                <NutritionStats
-                    label="Carbohydrates"
-                    value={totals.carbs}
-                    max={300}
-                    color="bg-[#FACC15]"
-                    icon="🍞"
-                />
-                <NutritionStats
-                    label="Fat"
-                    value={totals.fat}
-                    max={100}
-                    color="bg-[#60A5FA]"
-                    icon="🥑"
-                />
-                <NutritionStats
-                    label="Fiber"
-                    value={totals.fiber}
-                    max={50}
-                    color="bg-[#4ADE80]"
-                    icon="🌿"
-                />
+                <View className="px-[10px] pt-[5px]">
+                    <NutritionStats label="Protein" value={totals.protein} max={150} color="bg-[#F87171]" icon="🥩"/>
+                    <NutritionStats label="Carbohydrates" value={totals.carbs} max={300} color="bg-[#FACC15]" icon="🍞"/>
+                    <NutritionStats label="Fat" value={totals.fat} max={100} color="bg-[#60A5FA]" icon="🥑"/>
+                    <NutritionStats label="Fiber" value={totals.fiber} max={50} color="bg-[#4ADE80]" icon="🌿"/>
+                </View>
+
             </View>
         </View>
     );
@@ -242,7 +197,7 @@ export const DietDescription = ({ dietPlan }: any) => {
     if (!validDays.length) {
         return (
             <View className="p-8">
-                <Text className="text-primary/60 text-center">
+                <Text className="text-tertiary text-center">
                     Something went wrong, try again!
                 </Text>
             </View>
@@ -256,8 +211,8 @@ export const DietDescription = ({ dietPlan }: any) => {
         <ScrollView className="flex-1 p-4 pt-0">
             <DayNavigator current={currentDay} total={totalDays} onChange={setCurrentDay}/>
 
-            <View className="flex-col lg:flex-row gap-8">
-                <View className="lg:flex-2">
+            <View className="flex-col">
+                <View className="flex-2">
                     {(currentDayData?.meals || [])
                         .sort((a: any, b: any) => (a?.time || '').localeCompare(b?.time || ''))
                         .map((meal: any, index: number) => (
@@ -265,7 +220,7 @@ export const DietDescription = ({ dietPlan }: any) => {
                         ))}
                 </View>
 
-                <View className="lg:flex-1">
+                <View className="flex-1">
                     <DailySummary day={currentDayData} />
                 </View>
             </View>
