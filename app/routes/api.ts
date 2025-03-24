@@ -138,7 +138,7 @@ export const updateProfileRequest = async (profileData: any) => {
     }
 };
 
-export const addFriendRequest = async (friendUsername: string) => {
+export const addFriendRequest = async (friendUsername: string) : Promise<any> => {
     const token = await AsyncStorage.getItem('token');
     try {
         const response = await fetch(`${API_URL}/users/add-friend`, {
@@ -151,10 +151,11 @@ export const addFriendRequest = async (friendUsername: string) => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to add friend');
+            const text = await response.text();
+            throw new Error('Failed to accept friend request: ' + text);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         return data;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An error occurred';
@@ -162,7 +163,7 @@ export const addFriendRequest = async (friendUsername: string) => {
     }
 };
 
-export const declineFriendRequest = async (friendUsername: string) => {
+export const declineFriendRequest = async (friendUsername: string) : Promise<any> => {
     const token = await AsyncStorage.getItem('token');
     try {
         const response = await fetch(`${API_URL}/users/decline-friend-request`, {
@@ -175,10 +176,11 @@ export const declineFriendRequest = async (friendUsername: string) => {
         });
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            const text = await response.text();
+            throw new Error('Failed to decline friend request: ' + text);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         return data;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An error occurred';
@@ -204,7 +206,7 @@ export const sendFriendRequestRequest = async (friendUsername: string) => {
             throw new Error('Failed to send friend request: ' + text);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         return data;
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An error occurred';
@@ -281,3 +283,37 @@ export const getLeaderboardRequest = async (skip: number = 0, limit: number = 10
         return { error: errorMessage };
     }
 };
+
+const createFormData = (imagePath: string) => {
+    const data = new FormData();
+    const file = {
+        uri: imagePath,
+        type: 'image/jpeg',
+        name: 'photo.jpg'
+    } as any;
+    data.append('image', file);
+    return data;
+};
+
+export const sendMealAnalyzeRequest = async (imagePath: string) => {
+    const token = await AsyncStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/meal/analyze`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`,
+            },
+            body: createFormData(imagePath)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send analysis request');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+}

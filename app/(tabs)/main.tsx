@@ -8,9 +8,16 @@ import { getUserDataRequest } from '../routes/api';
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 
 const Main = () => {
+    const [username, setUsername] = React.useState('');
+    const [points, setPoints] = React.useState(0);
+    const [persistentPoints, setPersistentPoints] = React.useState(0);
+
     useEffect(() => {
         const fetchUserData = async () => {
             const data = await getUserDataRequest();
+            setUsername(data.username);
+            setPoints(data.points);
+            setPersistentPoints(data.persistentPoints);
             await AsyncStorage.setItem('friendCode', data.friendCode);
         };
 
@@ -59,7 +66,7 @@ const Main = () => {
 
                             <View className="ml-4">
                                 <Text className="text-tertiary text-[14px] font-fontMain-regular">Hey,</Text>
-                                <Text className="text-secondary text-[20px] font-fontMain-bold">@diferti</Text>
+                                <Text className="text-secondary text-[20px] font-fontMain-bold">@{username}</Text>
                             </View>
                         </View>
 
@@ -77,7 +84,7 @@ const Main = () => {
                         <View className="flex-row items-center justify-center flex-[1] pr-[15px]">
                             <Image source={require('../../assets/images/icons/gem.png')} className="w-[30px] h-[30px] mt-[3px]" />
                             <View className="ml-[5px]">
-                                <Text className="text-secondary text-[26px] font-fontMain-bold">1 999 999</Text>
+                                <Text className="text-secondary text-[26px] font-fontMain-bold">{points}</Text>
                             </View>
                         </View>
 
@@ -87,7 +94,7 @@ const Main = () => {
 
                         <View className="flex-row items-center justify-center flex-[1] pl-[15px]">
                             <Image source={require('../../assets/images/legues/legendary.png')} className="w-[30px] h-[30px] mr-[7px]" />
-                            <Text className="text-highlight text-[26px] font-fontMain-bold">1 999 999</Text>
+                            <Text className="text-highlight text-[26px] font-fontMain-bold">{persistentPoints}</Text>
                         </View>
                     </View>
                 </View>
