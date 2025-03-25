@@ -11,8 +11,8 @@ import { getTierImage } from '../tiers';
 
 const Main = () => {
     const [username, setUsername] = React.useState('');
-    const [points, setPoints] = React.useState(0);
     const [persistentPoints, setPersistentPoints] = React.useState(0);
+    const [rank, setRank] = React.useState(0);
 
     const [avatarUrl, setAvatarUrl] = React.useState<ImageSourcePropType | null>(null);
 
@@ -20,8 +20,8 @@ const Main = () => {
         const fetchUserData = async () => {
             const data = await getUserDataRequest();
             setUsername(data.username);
-            setPoints(data.points);
             setPersistentPoints(data.persistentPoints);
+            setRank(data.rank);
             setAvatarUrl(data.avatar ? { uri: data.avatar } : null);
             await AsyncStorage.setItem('friendCode', data.friendCode);
         };
@@ -32,8 +32,8 @@ const Main = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             const data = await getUserDataRequest();
-            setPoints(data.points);
             setPersistentPoints(data.persistentPoints);
+            setRank(data.rank);
         };
 
         const interval = setInterval(() => {
@@ -107,7 +107,7 @@ const Main = () => {
                         <View className="flex-row items-center justify-center flex-[1] pr-[15px]">
                             <Image source={require('../../assets/images/icons/gem.png')} className="w-[30px] h-[30px] mt-[3px]" />
                             <View className="ml-[5px]">
-                                <Text className="text-secondary text-[26px] font-fontMain-bold">{points}</Text>
+                                <Text className="text-secondary text-[26px] font-fontMain-bold">{persistentPoints}</Text>
                             </View>
                         </View>
 
@@ -117,7 +117,7 @@ const Main = () => {
 
                         <View className="flex-row items-center justify-center flex-[1] pl-[15px]">
                             <Image source={getTierImage(persistentPoints)} className="w-[30px] h-[30px] mr-[7px]" />
-                            <Text className="text-highlight text-[26px] font-fontMain-bold">{persistentPoints}</Text>
+                            <Text className="text-highlight text-[26px] font-fontMain-bold"># {rank}</Text>
                         </View>
                     </View>
                 </View>
