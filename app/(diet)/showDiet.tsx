@@ -197,7 +197,7 @@ const ShowDiet = () => {
                 <DietDescription dietPlan={dietPlan}/>
 
                 <View className="items-center">
-                    <Link href="../" asChild>
+                    <Link href= {{pathname: '/(tabs)/diet'}}>
                         <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50">
                             <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">SAVE</Text>
                         </TouchableOpacity>
