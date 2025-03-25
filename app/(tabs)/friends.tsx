@@ -15,12 +15,12 @@ interface Friend {
     username: string;
     persistentPoints: number;
     isOnline: boolean;
-    image?: string;
+    avatar?: string;
 }
 
 interface FriendRequest {
     username: string;
-    image?: string;
+    avatar?: string;
 }
 
 const FriendsScreen: React.FC = () => {
@@ -123,8 +123,8 @@ const FriendsScreen: React.FC = () => {
                                                 }}>
                                                 <View className="flex-row items-center h-full p-3">
                                                     <View className="mr-3">
-                                                        {friend.image ? (
-                                                            <Image source={{ uri: friend.image }} className="w-[50px] h-[50px] rounded-[5px] border border-highlight"/>
+                                                        {friend.avatar ? (
+                                                            <Image source={{ uri: friend.avatar }} className="w-[50px] h-[50px] rounded-[5px] border border-highlight"/>
                                                         ) : (
                                                             <View className="w-[50px] h-[50px] rounded-[5px] border border-highlight bg-[#2D4263] justify-center items-center">
                                                                 <Image source={require('../../assets/images/icons/user-image.png')} className="w-[30px] h-[30px]"/>
@@ -219,8 +219,8 @@ const RequestsScreen: React.FC = () => {
                                             padding: 12,
                                         }}>
                                         <View className="flex-row items-center">
-                                            {request.image ? (
-                                                <Image source={{ uri: request.image }} className="w-[50px] h-[50px] rounded-[5px] border border-highlight mr-3"/>
+                                            {request.avatar ? (
+                                                <Image source={{ uri: request.avatar }} className="w-[50px] h-[50px] rounded-[5px] border border-highlight mr-3"/>
                                             ) : (
                                                 <View className="w-[50px] h-[50px] rounded-[5px] border border-highlight bg-[#2D4263] justify-center items-center mr-3">
                                                     <Image source={require('../../assets/images/icons/user-image.png')} className="w-[30px] h-[30px]"/>

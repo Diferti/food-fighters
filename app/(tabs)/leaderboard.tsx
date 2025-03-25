@@ -13,10 +13,10 @@ interface LeaderboardEntry {
     username: string;
     persistentPoints: number;
     rank: number;
-    image?: string;
+    avatar?: string;
 }
 
-const LeaderboardItem = ({ id, username, persistentPoints, rank, image }: LeaderboardEntry) => (
+const LeaderboardItem = ({ id, username, persistentPoints, rank, avatar }: LeaderboardEntry) => (
     <View style={{
             shadowColor: 'rgba(7, 186, 77, 0.3)',
             shadowOffset: { width: 3, height: 3 },
@@ -37,13 +37,13 @@ const LeaderboardItem = ({ id, username, persistentPoints, rank, image }: Leader
                 marginBottom: 12,
                 height: 70,
             }}>
-            {image ? (
-                <Image source={{ uri: image }} className="w-[50px] h-[50px] border border-highlight rounded-[5px]"/>
-            ) : (
-                <View className="w-[50px] h-[50px] border border-highlight rounded-[5px] bg-[#2D4263] justify-center items-center">
+            <View className="w-[50px] h-[50px] border border-highlight rounded-[5px] bg-[#2D4263] justify-center items-center overflow-hidden">
+                {avatar ? (
+                    <Image source={{ uri: avatar }} className="w-[50px] h-[50px]"/>
+                ) : (
                     <Image source={require('../../assets/images/icons/user-image.png')} className="w-[30px] h-[30px]"/>
-                </View>
-            )}
+                )}
+            </View>
             <View className="flex-1 ml-[15px] justify-center">
                 <Text className="text-secondary text-[20px] font-fontMain-bold mb-[3px]">{username}</Text>
                 <View className="flex-row items-center">

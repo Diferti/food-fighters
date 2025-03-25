@@ -14,12 +14,15 @@ const Main = () => {
     const [points, setPoints] = React.useState(0);
     const [persistentPoints, setPersistentPoints] = React.useState(0);
 
+    const [avatarUrl, setAvatarUrl] = React.useState<ImageSourcePropType | null>(null);
+
     useEffect(() => {
         const fetchUserData = async () => {
             const data = await getUserDataRequest();
             setUsername(data.username);
             setPoints(data.points);
             setPersistentPoints(data.persistentPoints);
+            setAvatarUrl(data.avatar ? { uri: data.avatar } : null);
             await AsyncStorage.setItem('friendCode', data.friendCode);
         };
 
@@ -76,8 +79,12 @@ const Main = () => {
                         }}>
 
                         <View className="flex-row items-center">
-                            <View className="w-[65px] h-[65px] rounded-[5px] border border-highlight bg-transparent justify-center items-center">
+                            <View className="w-[65px] h-[65px] rounded-[5px] border border-highlight bg-transparent justify-center items-center overflow-hidden">
+                                {avatarUrl ? (
+                                    <Image source={avatarUrl} className="w-[65px] h-[65px]"/>
+                                ) : (
                                 <Image source={require('../../assets/images/icons/user-image.png')} className="w-[37px] h-[37px]"/>
+                                )}
                             </View>
 
                             <View className="ml-4">
