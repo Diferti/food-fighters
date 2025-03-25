@@ -92,8 +92,9 @@ const TagInput = ({ label, values, setValues, colorClass }: {
     return (
         <View>
             <Text className="text-[16px] font-fontMain-regular text-secondary mb-2 mt-[10px]">{label}</Text>
-            <TextInput className="w-full p-3 border border-highlight rounded-[10px] mb-[10px]" value={inputValue}
-                       onChangeText={setInputValue} onSubmitEditing={handleAddTags} onBlur={handleAddTags} placeholder="Enter food (comma separated)"/>
+            <TextInput className="w-full p-3 border border-highlight rounded-[10px] font-fontMain-regular text-secondary mb-[10px]" value={inputValue}
+                       onChangeText={setInputValue} onSubmitEditing={handleAddTags} onBlur={handleAddTags} placeholder="Enter food (comma separated)"
+                       placeholderTextColor="#818795"/>
             <View className="flex-row flex-wrap gap-2">
                 {values.map((value, index) => (
                     <TouchableOpacity key={index} onPress={() => setValues(values.filter((_, i) => i !== index))}
