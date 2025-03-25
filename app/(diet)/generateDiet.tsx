@@ -195,7 +195,7 @@ const GenerateDiet = () => {
                 </View>
 
                 <View className="items-center mt-[20px]">
-                    <Link href={{ pathname: '/(diet)/showDiet'}} asChild>
+                    <Link href={{ pathname: '/(diet)/showDiet', params: { selectedDays, selectedMeals, restrictions, loveProducts, unlovedProducts } }} asChild>
                         <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50">
                             <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">GENERATE</Text>
                         </TouchableOpacity>

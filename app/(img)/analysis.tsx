@@ -70,11 +70,22 @@ const Analysis = () => {
         setPointsEarned(response.mealScore.score);
 
         try {
-            const items = response.foodIdentification.items;
+            let items = response.foodIdentification?.items ?? response.foodIdentification?.identifiableItems;
+
+            if (Array.isArray(items) && items.every(item => typeof item === 'string')) {
+                console.log('items', items);
+                items = items.map(item => {
+                    const portionEstimate = response.foodIdentification.portionEstimates.find((estimate: any) => estimate.name === item);
+                    return {
+                        name: item,
+                        weight: portionEstimate?.weight ?? portionEstimate?.volume ?? 'N/A',
+                    };
+                });
+            }
+
             const identifiedItems: IdentifiedItem[] = items.map((item: any) => ({
                 product: item.name,
-                weight: item.weight,
-                volume: item.volume,
+                weight: item.weight ?? item.volume ?? 'N/A',
             }));
 
             setIdentifiedItems(identifiedItems);

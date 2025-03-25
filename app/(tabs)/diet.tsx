@@ -4,14 +4,30 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import React from "react";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {Link} from "expo-router";
+import { DietDescription } from '../components/diet/DietDescription';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Diet = () => {
+    const [savedDiet, setSavedDiet] = React.useState(null);
+
+    const loadDiet = async () => {
+        await AsyncStorage.getItem('diet').then((diet) => {
+            setSavedDiet(JSON.parse(diet as string));
+        });
+    };
+
+    React.useEffect(() => {
+        loadDiet();
+    }, []);
+
     return (
         <BackgroundWrapper>
             <SafeAreaView className="flex-1 mb-[45px]">
                 <View className="h-full bg-dark-blue mt-[45px] m-[15px] rounded-[10px] p-[15px]">
                     <Text className="text-highlight text-[26px] font-fontHeader mt-[10px] text-center">My Diet</Text>
-
+                    {savedDiet ? 
+                    <DietDescription dietPlan={savedDiet}/>
+                    :
                     <View className="flex-1 justify-center">
                         <MaterialCommunityIcons name="food-variant-off" size={150} color="#818795" className="text-center"/>
 
@@ -25,6 +41,7 @@ const Diet = () => {
                             </Link>
                         </View>
                     </View>
+                    }
                 </View>
             </SafeAreaView>
         </BackgroundWrapper>
