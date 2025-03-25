@@ -316,4 +316,45 @@ export const sendMealAnalyzeRequest = async (imagePath: string) => {
         const errorMessage = error instanceof Error ? error.message : 'An error occurred';
         return { error: errorMessage };
     }
-}
+};
+
+export const sendDietGenerationRequest = async (selectedDays: number, selectedMeals: string[], restrictions: string[], loveProducts: string[], unlovedProducts: string[]) => {
+    const token = await AsyncStorage.getItem('token');
+
+    if (typeof selectedMeals === 'string') {
+        selectedMeals = [selectedMeals];
+    }
+    if (typeof restrictions === 'string') {
+        restrictions = [restrictions];
+    }
+    if (typeof loveProducts === 'string') {
+        loveProducts = [loveProducts];
+    }
+    if (typeof unlovedProducts === 'string') {
+        unlovedProducts = [unlovedProducts];
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/meal/generate-diet`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`
+            },
+            body: JSON.stringify({ selectedDays, selectedMeals, restrictions, loveProducts, unlovedProducts })
+        });
+        console.log(JSON.stringify({ selectedDays, selectedMeals, restrictions, loveProducts, unlovedProducts }));
+
+        if (!response.ok) {
+            const text = await response.text();
+            throw new Error('Failed to send diet generation request: ' + text);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+};
