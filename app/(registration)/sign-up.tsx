@@ -1,15 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    Image,
-    SafeAreaView,
-    ActivityIndicator,
-    Modal,
-    Pressable, Keyboard
-} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, SafeAreaView, ActivityIndicator, Modal, Keyboard, Animated,} from 'react-native';
 import {Ionicons, FontAwesome6, AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Link} from "expo-router";
@@ -82,23 +72,36 @@ export default function SignUp() {
         setHasCheckedUsername(true);
     };
 
-    const [keyboardVisible, setKeyboardVisible] = useState(false);
-    const [keyboardHeight, setKeyboardHeight] = useState(0);
+    const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+    const marginBottomAnim = useRef(new Animated.Value(0)).current;
+    const getDefaultMargin = () => { return currentStep === 6 ? 50 : 150; };
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-            setKeyboardVisible(true);
-            setKeyboardHeight(e.endCoordinates.height);
+            setIsKeyboardVisible(true);
+            Animated.timing(marginBottomAnim, {
+                toValue: e.endCoordinates.height - 50,
+                duration: 400,
+                useNativeDriver: false,
+            }).start();
         });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false);
-            setKeyboardHeight(0);
+            setIsKeyboardVisible(false);
+            Animated.timing(marginBottomAnim, {
+                toValue: getDefaultMargin(),
+                duration: 400,
+                useNativeDriver: false,
+            }).start();
         });
         return () => {
             keyboardDidShowListener.remove();
             keyboardDidHideListener.remove();
         };
     }, []);
+
+    useEffect(() => {
+        marginBottomAnim.setValue(getDefaultMargin());
+    }, [currentStep]);
 
     return (
         <SafeAreaView className="flex-1 bg-primary">
@@ -306,12 +309,12 @@ export default function SignUp() {
 
                 <View className="flex-1" />
 
-                <View style={{ marginBottom: keyboardVisible ? keyboardHeight-50 : (currentStep === 6 ? 50 : 150) }}>
+                <Animated.View style={{ marginBottom: marginBottomAnim }}>
                     <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center
                         ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`} onPress={handleNext} disabled={isNextDisabled()}>
                         <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
                     </TouchableOpacity>
-                </View>
+                </Animated.View>
 
                 <View className="flex-row justify-center mb-[10px]">
                     <Text className="text-tertiary font-fontMain-medium text-[18px]">Got an account? </Text>
