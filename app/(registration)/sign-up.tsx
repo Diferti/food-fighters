@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -8,7 +8,7 @@ import {
     SafeAreaView,
     ActivityIndicator,
     Modal,
-    Pressable
+    Pressable, Keyboard
 } from 'react-native';
 import {Ionicons, FontAwesome6, AntDesign, MaterialCommunityIcons} from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -17,7 +17,6 @@ import EmailMenu from "@/app/components/EmailMenu";
 
 export default function SignUp() {
     const [currentStep, setCurrentStep] = useState(1);
-    const [showDatePicker, setShowDatePicker] = useState(false);
     const [showEmailMenu, setShowEmailMenu] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
@@ -30,11 +29,14 @@ export default function SignUp() {
         dob: new Date(),
     });
 
-    const totalSteps = formData.goal === 'Maintain my current weight' ? 8 : 9;
+    const totalSteps = formData.goal === 'Maintain my current weight' ? 9 : 10;
 
     const handleNext = () => {
-        if (currentStep < totalSteps) setCurrentStep(currentStep + 1);
-        if (currentStep === 8) setShowDatePicker(true);
+        if (currentStep === 3 && formData.goal === 'Maintain my current weight') {
+            setCurrentStep(5);
+        } else if (currentStep < totalSteps) {
+            setCurrentStep(currentStep + 1);
+        }
     };
 
     const handleBack = () => {
@@ -52,6 +54,7 @@ export default function SignUp() {
     );
 
     const isNextDisabled = () => {
+        const currentYear = new Date().getFullYear();
         switch(currentStep) {
             case 1: return false;
             case 2: return !(hasCheckedUsername && isUsernameAvailable);
@@ -61,6 +64,7 @@ export default function SignUp() {
             case 6: return !formData.activityLevel;
             case 7: return !formData.height;
             case 8: return !formData.gender;
+            case 9: return !(currentYear - formData.dob.getFullYear() > 8);
             default: return false;
         }
     };
@@ -77,6 +81,24 @@ export default function SignUp() {
         setIsChecking(false);
         setHasCheckedUsername(true);
     };
+
+    const [keyboardVisible, setKeyboardVisible] = useState(false);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+            setKeyboardVisible(true);
+            setKeyboardHeight(e.endCoordinates.height);
+        });
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardVisible(false);
+            setKeyboardHeight(0);
+        });
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     return (
         <SafeAreaView className="flex-1 bg-primary">
@@ -270,30 +292,33 @@ export default function SignUp() {
                     </View>
                 )}
 
-                <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center mt-auto
-                    ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`} onPress={handleNext} disabled={isNextDisabled()}>
-                    <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
-                </TouchableOpacity>
+                {currentStep === 9 && (
+                    <View>
+                        <Text className="text-[26px] text-highlight font-fontMain-bold text-center mb-[30px]">
+                            What is your date of birth?
+                        </Text>
+                        <View className="mx-[20px] border-[1px] border-[#818493] rounded-[10px] items-center bg-[#383A46]">
+                                <DateTimePicker value={formData.dob} mode="date" display="spinner" maximumDate={new Date()} themeVariant="dark"
+                                    onChange={(event, date) => {if (date) {setFormData({ ...formData, dob: date });}}}/>
+                        </View>
+                    </View>
+                )}
 
-                <View className="flex-row justify-center mt-auto mb-[10px]">
+                <View className="flex-1" />
+
+                <View style={{ marginBottom: keyboardVisible ? keyboardHeight-50 : (currentStep === 6 ? 50 : 150) }}>
+                    <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center
+                        ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`} onPress={handleNext} disabled={isNextDisabled()}>
+                        <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
+                    </TouchableOpacity>
+                </View>
+
+                <View className="flex-row justify-center mb-[10px]">
                     <Text className="text-tertiary font-fontMain-medium text-[18px]">Got an account? </Text>
                     <TouchableOpacity className="active:opacity-50" onPress={() => setShowEmailMenu(true)}>
                         <Text className="text-highlight font-fontMain-bold text-[18px]">Sign in</Text>
                     </TouchableOpacity>
                 </View>
-
-                {/* Date Picker */}
-                {/*{showDatePicker && (*/}
-                {/*    <DateTimePicker*/}
-                {/*        value={formData.dob}*/}
-                {/*        mode="date"*/}
-                {/*        display={Platform.OS === 'ios' ? 'spinner' : 'default'}*/}
-                {/*        onChange={(_, date) => {*/}
-                {/*            setShowDatePicker(false);*/}
-                {/*            if (date) setFormData({ ...formData, dob: date });*/}
-                {/*        }}*/}
-                {/*    />*/}
-                {/*)}*/}
 
                 <Modal animationType="none" transparent={true} visible={showEmailMenu} onRequestClose={() => setShowEmailMenu(false)}>
                     <EmailMenu visible={showEmailMenu} onClose={() => setShowEmailMenu(false)}/>
