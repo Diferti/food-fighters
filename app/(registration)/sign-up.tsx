@@ -4,10 +4,12 @@ import {Ionicons, FontAwesome6, AntDesign, MaterialCommunityIcons} from '@expo/v
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Link} from "expo-router";
 import EmailMenu from "@/app/components/EmailMenu";
+import RegistrationMenu from "@/app/(registration)/RegistrationMenu";
 
 export default function SignUp() {
     const [currentStep, setCurrentStep] = useState(1);
     const [showEmailMenu, setShowEmailMenu] = useState(false);
+    const [showRegistrationMenu, setShowRegistrationMenu] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         goal: '',
@@ -19,7 +21,7 @@ export default function SignUp() {
         dob: new Date(),
     });
 
-    const totalSteps = formData.goal === 'Maintain my current weight' ? 9 : 10;
+    const totalSteps = 9;
 
     const handleNext = () => {
         if (currentStep === 3 && formData.goal === 'Maintain my current weight') {
@@ -74,7 +76,7 @@ export default function SignUp() {
 
     const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
     const marginBottomAnim = useRef(new Animated.Value(0)).current;
-    const getDefaultMargin = () => { return currentStep === 6 ? 50 : 150; };
+    const getDefaultMargin = () => { return 150; };
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -150,7 +152,7 @@ export default function SignUp() {
                                                             : 'border-[#E63946] bg-[#4D2F2F] text-[#E63946]'
                                                        : 'border-[#818493] bg-[#383A46] text-secondary'}`}
                                     placeholder="What’s your nickname?" placeholderTextColor="#CED0DC"
-                                    value={formData.username}
+                                    value={formData.username} autoCorrect={false} spellCheck={false} autoComplete="off"
                                     onChangeText={text => {
                                     setFormData({ ...formData, username: text });
                                     setHasCheckedUsername(false);
@@ -309,12 +311,24 @@ export default function SignUp() {
 
                 <View className="flex-1" />
 
-                <Animated.View style={{ marginBottom: marginBottomAnim }}>
-                    <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center
-                        ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`} onPress={handleNext} disabled={isNextDisabled()}>
-                        <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
-                    </TouchableOpacity>
-                </Animated.View>
+                {(() => {
+                    const button = (
+                        <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`}
+                            onPress={currentStep === 9 ? () => setShowRegistrationMenu(true) : handleNext} disabled={isNextDisabled()}>
+                            <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
+                        </TouchableOpacity>
+                    );
+
+                    return currentStep === 6 ? (
+                        <View className="mb-[35px]">
+                            {button}
+                        </View>
+                    ) : (
+                        <Animated.View style={{ marginBottom: marginBottomAnim }}>
+                            {button}
+                        </Animated.View>
+                    );
+                })()}
 
                 <View className="flex-row justify-center mb-[10px]">
                     <Text className="text-tertiary font-fontMain-medium text-[18px]">Got an account? </Text>
@@ -325,6 +339,10 @@ export default function SignUp() {
 
                 <Modal animationType="none" transparent={true} visible={showEmailMenu} onRequestClose={() => setShowEmailMenu(false)}>
                     <EmailMenu visible={showEmailMenu} onClose={() => setShowEmailMenu(false)}/>
+                </Modal>
+
+                <Modal animationType="none" transparent={true} visible={showRegistrationMenu} onRequestClose={() => setShowRegistrationMenu(false)}>
+                    <RegistrationMenu visible={showRegistrationMenu} onClose={() => setShowRegistrationMenu(false)}/>
                 </Modal>
             </View>
         </SafeAreaView>
