@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text, TextInput, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import {Alert, Text, TextInput, View, ScrollView, TouchableOpacity, Image, FlatList} from 'react-native';
 import BackgroundWrapper from '../components/BackgroundWrapper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TabMenu from '../components/TabMenu';
@@ -71,20 +71,20 @@ const FriendsScreen: React.FC = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                        <View className="flex-1 items-center">
-                            <Text className="text-secondary text-[16px] font-fontMain-bold mb-[10px]">Add Friend</Text>
-                            <View className="flex-row items-center bg-[#383A46] p-2 mx-[18px] rounded-[10px] border border-[#818493]">
-                                <TextInput className="flex-1 text-secondary text-[14px] font-fontMain-regular mr-2"
-                                    placeholder="Username or code"
-                                    placeholderTextColor="#CED0DC"
-                                    value={friendUsername}
-                                    onChangeText={setFriendUsername}/>
-                                <TouchableOpacity className="bg-[#354D4D] rounded-[5px] border border-highlight" onPress={handleSendFriendRequest}>
-                                    <Ionicons name="add" size={18} color="#07BA4D"/>
-                                </TouchableOpacity>
-                            </View>
+                    <View className="flex-1 items-center">
+                        <Text className="text-secondary text-[16px] font-fontMain-bold mb-[10px]">Add Friend</Text>
+                        <View className="flex-row items-center bg-[#383A46] p-2 mx-[18px] rounded-[10px] border border-[#818493]">
+                            <TextInput className="flex-1 text-secondary text-[14px] font-fontMain-regular mr-2"
+                                       placeholder="Username or code"
+                                       placeholderTextColor="#CED0DC"
+                                       value={friendUsername}
+                                       onChangeText={setFriendUsername}/>
+                            <TouchableOpacity className="bg-[#354D4D] rounded-[5px] border border-highlight" onPress={handleSendFriendRequest}>
+                                <Ionicons name="add" size={18} color="#07BA4D"/>
+                            </TouchableOpacity>
                         </View>
                     </View>
+                </View>
 
                 <View className="my-[10px] items-center">
                     <View className="flex-row items-center mb-2">
@@ -93,7 +93,7 @@ const FriendsScreen: React.FC = () => {
                         <View className="flex-1 h-px bg-highlight mr-[120px] mt-[2px]" />
                     </View>
 
-                    <ScrollView>
+                    <ScrollView className="w-full">
                         {friends.length === 0 ? (
                             <View className="flex-1 justify-center items-center h-full min-h-[350px]">
                                 <View className="items-center">
@@ -102,9 +102,9 @@ const FriendsScreen: React.FC = () => {
                                 </View>
                             </View>
                         ) : (
-                            <View className="flex-wrap flex-row justify-between px-2">
-                                {friends.map((friend, index) => (
-                                    <View key={index} className="w-1/2 p-2">
+                            <FlatList data={friends} numColumns={2} scrollEnabled={false} keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item: friend }) => (
+                                    <View className="w-1/2 p-2">
                                         <View style={{
                                             shadowColor: 'rgba(7, 186, 77, 0.3)',
                                             shadowOffset: { width: 3, height: 3 },
@@ -143,8 +143,7 @@ const FriendsScreen: React.FC = () => {
                                             </LinearGradient>
                                         </View>
                                     </View>
-                                ))}
-                            </View>
+                                )} contentContainerStyle={{ paddingHorizontal: 8 }}/>
                         )}
                     </ScrollView>
                 </View>
