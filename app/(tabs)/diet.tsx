@@ -11,9 +11,15 @@ const Diet = () => {
     const [savedDiet, setSavedDiet] = React.useState(null);
 
     const loadDiet = async () => {
-        await AsyncStorage.getItem('diet').then((diet) => {
+        const fetchDiet = async () => {
+            const diet = await AsyncStorage.getItem('diet');
             setSavedDiet(JSON.parse(diet as string));
-        });
+        };
+
+        fetchDiet();
+        const interval = setInterval(fetchDiet, 5000);
+
+        return () => clearInterval(interval);
     };
 
     React.useEffect(() => {

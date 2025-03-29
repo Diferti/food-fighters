@@ -89,7 +89,7 @@ const ShowDiet = () => {
 
                 <View className="items-center">
                     <TouchableOpacity className="bg-highlight h-[70px] w-[280px] justify-center rounded-[15px] active:opacity-50"
-                        onPress={() => router.push("/(tabs)/diet")}>
+                        onPress={() => router.push("../(tabs)/diet")}>
                         <Text className="text-primary text-[24px] font-fontHeader text-center pt-[7px]">SAVE</Text>
                     </TouchableOpacity>
                 </View>
