@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TouchableOpacity, Animated, Pressable, Modal, Image, ScrollView, Text } from 'react-native';
-import { Camera } from 'expo-camera';
+import { View, TouchableOpacity, Animated, Pressable, Modal, Image, Text } from 'react-native';
+import { Camera, CameraView } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Link } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
@@ -15,7 +15,6 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(0)).current;
-    const cameraRef = useRef<Camera>(null);
 
     const requestPermissions = async () => {
         const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -60,13 +59,6 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
         }
     }, [isVisible]);
 
-    const takePicture = async () => {
-        if (cameraRef.current) {
-            const photo = await cameraRef.current.takePictureAsync();
-            setSelectedImage(photo.uri);
-        }
-    };
-
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -93,18 +85,13 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
                     }}>
 
                     <View className="flex-1 items-center justify-center py-4 px-[25px]">
-                        {selectedImage ? (
-                            <View className="bg-primary rounded-[10px] overflow-hidden w-full max-w-md mb-[125px]">
+                        <View className="bg-primary rounded-[10px] overflow-hidden w-full max-w-md mb-[125px]">
+                            {selectedImage ? (
                                 <Image source={{ uri: selectedImage }} className="w-full h-[525px] object-contain"/>
-                            </View>
-                        ) : (
-                            // <Camera
-                            //     ref={cameraRef}
-                            //     className="flex-1"
-                            //     type={Camera.Constants.Type.back}
-                            // />
-                            null
-                        )}
+                            ) : (
+                                <CameraView facing="back" style={{ width: '100%', height: 525 }}/>
+                            )}
+                        </View>
                     </View>
 
                     <View className="absolute bottom-20 w-full px-8">
@@ -112,8 +99,7 @@ const CameraMenu: React.FC<CameraMenuProps> = ({ isVisible, onClose }) => {
                             {!selectedImage ? (
                                 <>
                                     <View className="items-center ml-[40px]">
-                                        <TouchableOpacity className="border-[2px] border-highlight w-[45px] h-[45px] rounded-full items-center justify-center"
-                                             onPress={takePicture}>
+                                        <TouchableOpacity className="border-[2px] border-highlight w-[45px] h-[45px] rounded-full items-center justify-center">
                                             <Ionicons name="camera" size={24} color="#07BA4D" />
                                         </TouchableOpacity>
                                         <Text className="text-secondary text-[12px] mt-2">Take Photo</Text>

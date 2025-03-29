@@ -42,23 +42,31 @@
           "backgroundColor": "#121A27"
         }
       ],
-    [
-      "expo-font",
-      {
-        "fonts": [
-          "./assets/fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Thin.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraLight.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Light.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Regular.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Medium.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-SemiBold.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Bold.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraBold.ttf",
-          "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Black.ttf"
-        ]
-      }
-    ]
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Thin.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraLight.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Light.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Regular.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Medium.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-SemiBold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Bold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraBold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Black.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
