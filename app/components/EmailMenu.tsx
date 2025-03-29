@@ -1,13 +1,28 @@
-import {Pressable, View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
+import {Pressable, View, Text, TouchableOpacity, Animated, Easing, Alert} from 'react-native';
 import React, { useEffect, useRef } from 'react';
-import {Link} from "expo-router";
+import {Link, router} from "expo-router";
 import { Ionicons } from '@expo/vector-icons';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import * as Google from 'expo-auth-session/providers/google';
+import * as WebBrowser from "expo-web-browser";
+import * as AuthSession from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { sendGoogleAuthRequest } from '../routes/api';
 
 export default function EmailMenu({ visible, onClose }: { visible: boolean; onClose: () => void }) {
     const slideAnim = useRef(new Animated.Value(400)).current;
     const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        WebBrowser.maybeCompleteAuthSession();
+    }, []);
+
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        clientId: '88224906038-8djhk74k5budf9qbetfvvg107k39qhef.apps.googleusercontent.com',
+        redirectUri: 'https://auth.expo.io/@danqzq/foodfighters',
+    });
 
     useEffect(() => {
         if (visible) {
@@ -43,6 +58,40 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
             });
         }
     }, [visible]);
+
+    useEffect(() => {
+        if (response?.type === 'success') {
+            const { authentication } = response;
+            const fetchUserInfo = async () => {
+                try {
+                    const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+                        headers: { Authorization: `Bearer ${authentication?.accessToken}` },
+                    });
+                    const userInfo = await userInfoResponse.json();
+                    const result = await sendGoogleAuthRequest(authentication?.idToken, userInfo.picture);
+                    if (result.error) {
+                        Alert.alert('Error', result.error);
+                        return;
+                    }
+
+                    await AsyncStorage.setItem('token', result.token);
+                    router.push('/(tabs)/main');
+                } catch (error) {
+                    console.error('Error fetching user info:', error);
+                } finally {
+                    // Explicitly dismiss the browser tab
+                    AuthSession.dismiss();
+                }
+            };
+
+            fetchUserInfo();
+        } else if (response?.type === 'error') {
+            console.error('Authentication error:', response.error);
+            Alert.alert('Authentication Error', 'Failed to authenticate with Google.');
+            // Dismiss the browser tab in case of an error
+            AuthSession.dismiss();
+        }
+    }, [response]);
 
     return (
         <Animated.View
@@ -83,7 +132,13 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
                             or
                         </Text>
 
-                        <Pressable className="flex-row items-center h-[50px] bg-blue-600 rounded-[15px] active:opacity-50 justify-center w-[300px] mb-[20px]">
+                        <Pressable
+                            onPress={() => {
+                                promptAsync();
+                                onClose();
+                            }}
+                            className="flex-row items-center h-[50px] bg-blue-600 rounded-[15px] active:opacity-50 justify-center w-[300px] mb-[20px]"
+                        >
                             <FontAwesome name="google-plus-square" size={26} color="white" className="mr-3 mt-[3px]" />
                             <Text className="font-fontMain-medium text-secondary text-[22px]">
                                 Continue with Google

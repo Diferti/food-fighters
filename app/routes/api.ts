@@ -25,13 +25,25 @@ export const loginRequest = async (username: string, password: string) => {
 };
 
 export const registerRequest = async (userData: any) => {
+    const { username, email, password, goal, weight, height, activityLevel, gender, weightGainTarget, dateOfBirth } = userData;
     try {
         const response = await fetch(`${API_URL}/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData),
+            body: JSON.stringify({
+                username,
+                email,
+                password,
+                goal,
+                weight,
+                height,
+                activityLevel,
+                gender,
+                weightGainTarget,
+                dateOfBirth,
+            }),
         });
 
         if (!response.ok) {
@@ -358,3 +370,25 @@ export const sendDietGenerationRequest = async (selectedDays: number, selectedMe
         return { error: errorMessage };
     }
 };
+
+export const sendGoogleAuthRequest = async (idToken : string | undefined, avatar: string) => {
+    try {
+        const response = await fetch(`${API_URL}/users/google-auth`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ idToken, avatar }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to authenticate with Google');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        return { error: errorMessage };
+    }
+}

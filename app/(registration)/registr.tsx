@@ -5,7 +5,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { loginRequest } from '../routes/api';
+import { registerRequest } from '../routes/api';
 import EmailMenu from "@/app/components/EmailMenu";
 
 const Registr = () => {
@@ -21,6 +21,33 @@ const Registr = () => {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
+
+        const formData = await AsyncStorage.getItem('formData');
+        if (!formData) {
+            Alert.alert('Error', 'No form data found');
+            return;
+        }
+        const parsedFormData = JSON.parse(formData);
+
+        const result = await registerRequest({
+            username: parsedFormData.username,
+            email: email,
+            password: password,
+            goal: parsedFormData.goal,
+            weight: parsedFormData.currentWeight,
+            height: parsedFormData.height,
+            activityLevel: parsedFormData.activityLevel,
+            gender: parsedFormData.gender,
+            weightGainTarget: parsedFormData.targetWeight,
+            dateOfBirth: parsedFormData.dob,
+        });
+        if (result.error) {
+            Alert.alert('Error', result.error);
+            return;
+        }
+
+        await AsyncStorage.setItem('token', result.token);
+        router.push('/(tabs)/main');
     };
 
     return (

@@ -5,6 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {Link} from "expo-router";
 import EmailMenu from "@/app/components/EmailMenu";
 import RegistrationMenu from "@/app/(registration)/RegistrationMenu";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SignUp() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -20,6 +21,14 @@ export default function SignUp() {
         gender: '',
         dob: new Date(),
     });
+
+    const saveFormData = async () => {
+        try {
+            await AsyncStorage.setItem('formData', JSON.stringify(formData));
+        } catch (error) {
+            console.error('Error saving form data:', error);
+        }
+    }
 
     const totalSteps = 9;
 
@@ -314,7 +323,15 @@ export default function SignUp() {
                 {(() => {
                     const button = (
                         <TouchableOpacity className={`w-[70px] h-[70px] rounded-full items-center justify-center self-center ${isNextDisabled() ? 'bg-[#505050]' : 'bg-secondary'}`}
-                            onPress={currentStep === 9 ? () => setShowRegistrationMenu(true) : handleNext} disabled={isNextDisabled()}>
+                            onPress={() => {
+                                if (currentStep === 9) {
+                                    setShowRegistrationMenu(true);
+                                } else {
+                                    handleNext();
+                                }
+                                saveFormData();
+                            }} 
+                            disabled={isNextDisabled()}>
                             <Image source={require('../../assets/images/icons/sword.png')} className="w-[45px] h-[45px]" resizeMode="contain"/>
                         </TouchableOpacity>
                     );
