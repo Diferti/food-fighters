@@ -174,7 +174,7 @@ const Analysis = () => {
                                     {identifiedItems.map((item, index) => (
                                         <View key={index} className="flex-row justify-between items-center py-2 border-b border-highlight">
                                             <Text className="text-secondary text-[14px] font-fontMain-regular">{item.product}</Text>
-                                            <Text className="text-secondary text-[14px] font-fontMain-regular">{item.weight}</Text>
+                                            <Text className="text-secondary text-[14px] font-fontMain-regular">{item.weight}{item.weight !== 'N/A' ? 'g' : ''}</Text>
                                         </View>
                                     ))}
                                 </ScrollView>

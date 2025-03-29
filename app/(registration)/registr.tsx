@@ -34,13 +34,14 @@ const Registr = () => {
             email: email,
             password: password,
             goal: parsedFormData.goal,
-            weight: parsedFormData.currentWeight,
-            height: parsedFormData.height,
+            weight: parseFloat(parsedFormData.currentWeight),
+            height: parseFloat(parsedFormData.height),
             activityLevel: parsedFormData.activityLevel,
-            gender: parsedFormData.gender,
-            weightGainTarget: parsedFormData.targetWeight,
-            dateOfBirth: parsedFormData.dob,
+            gender: parsedFormData.gender.toLowerCase(),
+            weightGainTarget: parseFloat(parsedFormData.targetWeight === '' ? '0' : parsedFormData.targetWeight),
+            dateOfBirth: `${new Date(parsedFormData.dob).getFullYear()}-${new Date(parsedFormData.dob).getMonth() + 1}-${new Date(parsedFormData.dob).getDate()}`
         });
+        console.log(result);
         if (result.error) {
             Alert.alert('Error', result.error);
             return;

@@ -13,10 +13,10 @@ export default function SignUp() {
     const [showRegistrationMenu, setShowRegistrationMenu] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
-        goal: '',
+        goal: -1,
         targetWeight: '',
         currentWeight: '',
-        activityLevel: '',
+        activityLevel: -1,
         height: '',
         gender: '',
         dob: new Date(),
@@ -33,7 +33,7 @@ export default function SignUp() {
     const totalSteps = 9;
 
     const handleNext = () => {
-        if (currentStep === 3 && formData.goal === 'Maintain my current weight') {
+        if (currentStep === 3 && formData.goal === 0) {
             setCurrentStep(5);
         } else if (currentStep < totalSteps) {
             setCurrentStep(currentStep + 1);
@@ -59,10 +59,10 @@ export default function SignUp() {
         switch(currentStep) {
             case 1: return false;
             case 2: return !(hasCheckedUsername && isUsernameAvailable);
-            case 3: return !formData.goal;
+            case 3: return formData.goal === -1;
             case 4: return !formData.targetWeight;
             case 5: return !formData.currentWeight;
-            case 6: return !formData.activityLevel;
+            case 6: return formData.activityLevel === -1;
             case 7: return !formData.height;
             case 8: return !formData.gender;
             case 9: return !(currentYear - formData.dob.getFullYear() > 8);
@@ -192,14 +192,14 @@ export default function SignUp() {
                 {currentStep === 3 && (
                     <View>
                         <Text className="text-[26px] text-highlight font-fontMain-bold text-center mb-[30px]">What is your goal?</Text>
-                        {['Maintain my current weight', 'Weight gain', 'Weight loss'].map((option) => (
-                            <TouchableOpacity key={option} className={`mx-[20px] h-[60px] p-[15px] rounded-[10px] mb-[15px] border-2 justify-center
-                             bg-primary ${formData.goal === option ? 'border-[#39CF78]' : 'border-secondary'}`}
-                                onPress={() => setFormData({ ...formData, goal: option })}>
-                                <Text className={`text-[18px] font-fontMain-bold ${formData.goal === option ? 'text-[#39CF78]' : 'text-secondary'}`}>
+                        {['Maintain my current weight', 'Weight gain', 'Weight loss'].map((option, index) => (
+                            <TouchableOpacity key={index} className={`mx-[20px] h-[60px] p-[15px] rounded-[10px] mb-[15px] border-2 justify-center
+                             bg-primary ${formData.goal === index ? 'border-[#39CF78]' : 'border-secondary'}`}
+                                onPress={() => setFormData({ ...formData, goal: index })}>
+                                <Text className={`text-[18px] font-fontMain-bold ${formData.goal === index ? 'text-[#39CF78]' : 'text-secondary'}`}>
                                     {option}
                                 </Text>
-                                {formData.goal === option && (
+                                {formData.goal === index && (
                                     <View className="absolute right-[15px] top-[14px]">
                                         <FontAwesome6 name="check" size={28} color="#39CF78"/>
                                     </View>
@@ -212,7 +212,7 @@ export default function SignUp() {
                 {currentStep === 4 && (
                     <View>
                         <Text className="text-[26px] text-highlight font-fontMain-bold text-center mb-[30px] mx-[30px]">
-                            How much weight would you like to {formData.goal.includes('gain') ? 'gain' : 'lose'}?
+                            How much weight would you like to {formData.goal === 1 ? 'gain' : 'lose'}?
                         </Text>
                         <View className="flex-row w-full max-w-[250px] mx-auto gap-[10px] items-center">
                             <TextInput className="flex-1 bg-dark-blue text-secondary text-[32px] font-fontMain-regular text-center
@@ -247,17 +247,17 @@ export default function SignUp() {
                             { title: 'Low Active', desc: 'Light exercise or walking (e.g., short daily walks, occasional workouts)'},
                             { title: 'Active', desc: 'Regular exercise or physically demanding job (e.g., gym 3–5 times a week, manual labor)'},
                             { title: 'Very Active', desc: 'Intense daily exercise or highly active job (e.g., athlete, construction worker, frequent high-intensity workouts)'}
-                        ].map((activity) => (
-                            <TouchableOpacity key={activity.title} onPress={() => setFormData({ ...formData, activityLevel: activity.title })}
+                        ].map((activity, index) => (
+                            <TouchableOpacity key={index} onPress={() => setFormData({ ...formData, activityLevel: index })}
                                 className={`p-4 rounded-[10px] mb-[15px] mx-[20px] bg-primary border-2
-                                    ${formData.activityLevel === activity.title ? 'border-[#39CF78]' : 'border-secondary'}`}>
-                                <Text className={`text-[20px] font-fontMain-bold mb-[5px] ${formData.activityLevel === activity.title ? 'text-[#39CF78]' : 'text-secondary'}`}>
+                                    ${formData.activityLevel === index ? 'border-[#39CF78]' : 'border-secondary'}`}>
+                                <Text className={`text-[20px] font-fontMain-bold mb-[5px] ${formData.activityLevel === index ? 'text-[#39CF78]' : 'text-secondary'}`}>
                                     {activity.title}
                                 </Text>
-                                <Text className={`text-[15px] font-fontMain-regular ${formData.activityLevel === activity.title ? 'text-[#2D9960]' : 'text-tertiary'}`}>
+                                <Text className={`text-[15px] font-fontMain-regular ${formData.activityLevel === index ? 'text-[#2D9960]' : 'text-tertiary'}`}>
                                     {activity.desc}
                                 </Text>
-                                {formData.activityLevel === activity.title && (
+                                {formData.activityLevel === index && (
                                     <View className="absolute right-[16px] top-[10px]">
                                         <FontAwesome6 name="check" size={28} color="#39CF78"/>
                                     </View>

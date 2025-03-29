@@ -42,7 +42,7 @@ export const registerRequest = async (userData: any) => {
                 activityLevel,
                 gender,
                 weightGainTarget,
-                dateOfBirth,
+                dateOfBirth
             }),
         });
 
