@@ -62,21 +62,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "91ea4f9c-46ab-47e4-b9f3-010749292cda"
-      }
-    },
-    "owner": "danqzq",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/91ea4f9c-46ab-47e4-b9f3-010749292cda"
     }
   }
 }
