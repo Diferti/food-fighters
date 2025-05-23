@@ -1,0 +1,31 @@
+{
+  "name": "food-fighters-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danqzq/food-fighters-server.git"
+  },
+  "author": "Dan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danqzq/food-fighters-server/issues"
+  },
+  "homepage": "https://github.com/danqzq/food-fighters-server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.87.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
