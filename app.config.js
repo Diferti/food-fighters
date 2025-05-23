@@ -1,0 +1,74 @@
+import 'dotenv/config';
+
+export default {
+  expo: {
+    name: "FoodFighters",
+    slug: "foodfighters",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/logo.png",
+    scheme: "foodfighters",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    extra: {
+      API_URL: process.env.API_URL,
+      GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+      GOOGLE_REDIRECT_URI: process.env.GOOGLE_REDIRECT_URI,
+    },
+    ios: {
+      supportsTablet: true,
+      infoPlist: {
+        NSCameraUsageDescription: "Allow $(PRODUCT_NAME) to access your camera",
+        NSPhotoLibraryUsageDescription: "Allow $(PRODUCT_NAME) to access your photos"
+      }
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/logo.png",
+        backgroundColor: "#121A27"
+      },
+      permissions: [
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    web: {
+      bundler: "metro",
+      output: "static",
+      favicon: "./assets/images/logo.png"
+    },
+    plugins: [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/logo.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#121A27"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Luckiest_Guy/LuckiestGuy-Regular.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Thin.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraLight.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Light.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Regular.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Medium.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-SemiBold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Bold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-ExtraBold.ttf",
+            "./assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Black.ttf"
+          ]
+        }
+      ]
+    ],
+    experiments: {
+      typedRoutes: true
+    }
+  }
+}; 

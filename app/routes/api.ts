@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 
-const API_URL = 'https://food-fighters-server-production.up.railway.app/api';
+export const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 export const loginRequest = async (username: string, password: string) => {
     try {

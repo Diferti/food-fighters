@@ -8,6 +8,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from "expo-web-browser";
 import * as AuthSession from 'expo-auth-session';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 
 import { sendGoogleAuthRequest } from '../routes/api';
 
@@ -19,9 +20,12 @@ export default function EmailMenu({ visible, onClose }: { visible: boolean; onCl
         WebBrowser.maybeCompleteAuthSession();
     }, []);
 
+    const clientId = Constants.expoConfig?.extra?.GOOGLE_CLIENT_ID;
+    const redirectUri = Constants.expoConfig?.extra?.GOOGLE_REDIRECT_URI;
+
     const [request, response, promptAsync] = Google.useAuthRequest({
-        clientId: '88224906038-8djhk74k5budf9qbetfvvg107k39qhef.apps.googleusercontent.com',
-        redirectUri: 'https://auth.expo.io/@danqzq/foodfighters',
+        clientId,
+        redirectUri,
     });
 
     useEffect(() => {
