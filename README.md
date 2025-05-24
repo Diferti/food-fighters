@@ -1,165 +1,189 @@
-# FoodFighters 🍽️
+# 🦫 FoodFighters
 
-An AI-powered gamified nutrition app that that transforms nutrition from a chore into a game, making healthy eating accessible, engaging, and community-driven. FoodFighters combines the power of artificial intelligence with gamification to help users make better food choices while having fun.
+An **AI-powered gamified nutrition app** that transforms nutrition from a chore into a game – making healthy eating **accessible**, **engaging**, and **community-driven**. FoodFighters combines the power of **artificial intelligence** with **gamification** to help users make better food choices while having fun.
 
-## Features 🌟
+---
 
-### Core Features
+## 🌟 Features
+
+### 🧠 Core Features
 - **AI-Powered Meal Analysis**
-  - Instant photo analysis of meals
-  - Detailed nutrition breakdown (calories, proteins, carbs, fat, fiber)
-  - Product identification with weight measurements
-  - Personalized diet plan generation
+  - 📷 Instant photo analysis of meals  
+  - 🧮 Detailed nutrition breakdown (calories, proteins, carbs, fat, fiber)  
+  - 🥫 Product identification with weight measurements  
+  - 🥗 Personalized diet plan generation  
 
-### Gamification Elements
-- **Dual Currency System**
-  - Gems: Used for ranking and competition
-  - Coins: Spendable currency for in-app purchases
-- **Competitive Features**
-  - Leaderboards
-  - League tiers
-  - Ranking system
-- **Reward System**
-  - Pet fighters (collectible and upgradeable)
-  - Real-world rewards
-    - Grocery store discounts
-    - Food delivery coupons
-- **Diet Plan Integration**
-  - Personalized diet plans based on:
-    - User preferences
-    - Health goals
-    - Dietary restrictions
-  - Double points for following diet plan
+### 🎮 Gamification Elements
+- **💎 Dual Currency System**
+  - Gems: Used for ranking and competition  
+  - Coins: Spendable currency for in-app purchases  
 
-## Technologies Used 🛠️
+- **🏆 Competitive Features**
+  - Leaderboards  
+  - League tiers  
+  - Ranking system  
 
-### Frontend
-- **React Native**: Core framework for mobile app development
-- **Expo**: Development platform and build tools
-- **TypeScript**: Type-safe programming language
-- **NativeWind**: Tailwind CSS for React Native
-- **Expo Router**: File-based routing for React Native
-- **React Navigation**: Navigation library
+- **🎁 Reward System**
+  - Pet fighters (collectible and upgradeable)  
+  - Real-world rewards:  
+    - 🛒 Grocery store discounts  
+    - 🍔 Food delivery coupons  
 
-### Backend & AI
-- **Node.js & Express**: Core server framework
-- **MongoDB & Mongoose**: Database for user data and meal history
-- **OpenAI API**: AI-powered meal analysis and diet plan generation
-- **JWT Authentication**: Secure user authentication
-- **Swagger/OpenAPI**: API documentation
-- **Multer**: File upload handling for meal images
+- **📋 Diet Plan Integration**
+  - 🍽️ Personalized diet plans based on:  
+    - User preferences  
+    - Health goals  
+    - Dietary restrictions  
+  - ⚡ Double points for following diet plan  
 
-### Additional Features
-- **Expo Camera**: Camera functionality for meal photos
-- **Expo Image Picker**: Image selection from gallery
-- **Expo Font**: Custom font loading
-- **React Native Reanimated**: Advanced animations
-- **React Native Gesture Handler**: Gesture handling
+---
 
-## Prerequisites 📋
+## 🛠️ Technologies Used
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for Mac) or Android Studio (for Android development)
-- MongoDB account
-- OpenAI API key
+### 📱 Frontend
+- **React Native**: Core framework for mobile app development  
+- **Expo**: Development platform and build tools  
+- **TypeScript**: Type-safe programming language  
+- **NativeWind**: Tailwind CSS for React Native  
+- **Expo Router**: File-based routing for React Native  
+- **React Navigation**: Navigation library  
 
-## Installation 🚀
+### 🧠 Backend & AI
+- **Node.js & Express**: Core server framework  
+- **MongoDB & Mongoose**: Database for user data and meal history  
+- **OpenAI API**: AI-powered meal analysis and diet plan generation  
+- **JWT Authentication**: Secure user authentication  
+- **Swagger/OpenAPI**: API documentation  
+- **Multer**: File upload handling for meal images  
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/diferti/foodfighters.git
-   cd foodfighters
-   ```
+### 🧩 Additional Features
+- **Expo Camera**: Camera functionality for meal photos  
+- **Expo Image Picker**: Image selection from gallery  
+- **Expo Font**: Custom font loading  
+- **React Native Reanimated**: Advanced animations  
+- **React Native Gesture Handler**: Gesture handling  
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+---
 
-3. Set up environment variables:
+## 📋 Prerequisites
 
-   For the client app (root directory), create a `.env` file based on existing `.env.example.frontend`:
-   ```env
-   # API Configuration
-   API_URL = "http://YOUR_IPv4_ADDRESS:3000/api"  # if you run locally replace YOUR_IPv4_ADDRESS with your actual IPv4 address
-   
-   # Google Authentication
-   GOOGLE_CLIENT_ID = "your_google_client_id"
-   GOOGLE_REDIRECT_URI = "https://auth.expo.io/@your-expo-username/foodfighters"
-   ```
+- Node.js (v14 or higher)  
+- npm or yarn  
+- Expo CLI  
+- iOS Simulator (for Mac) or Android Studio (for Android development)  
+- MongoDB account  
+- OpenAI API key  
 
-   For the server (server directory), create a `.env` file based on existing `.env.example.backend`:
-   ```env
-   # Server Configuration
-   PORT = "3000"
-   API_URL = "http://YOUR_IPv4_ADDRESS:3000"  # if you run locally replace YOUR_IPv4_ADDRESS with your actual IPv4 address
+---
 
-   # Database Configuration
-   MONGODB_URI = "your_mongodb_connection_string"
+## 🚀 Installation
 
-   # Authentication
-   JWT_SECRET = "your_jwt_secret_key_here"
+### 1️⃣ Clone and Setup
+```bash
+# Clone the repository
+git clone https://github.com/Diferti/food-fighters
+cd food-fighters
 
-   # Google OAuth
-   GOOGLE_CLIENT_ID = "your_google_client_id_here"
+# Install dependencies
+npm install
+# or
+yarn install
+```
 
-   # OpenAI Configuration
-   OPENAI_API_KEY = "your_openai_api_key_here"
-   ```
+### 2️⃣ Environment Configuration
 
-   Note: When running locally, you need to use your machine's IPv4 address instead of 'localhost' for the API_URL. You can find your IPv4 address by:
-   - Windows: Run `ipconfig` in Command Prompt
-   - Mac/Linux: Run `ifconfig` or `ip addr` in Terminal
-   
-   When hosting the server in production, you can use your actual domain URL instead of the IPv4 address.
+#### Frontend Setup
+Create a `.env` file in the root directory based on `.env.example.frontend`:
+```env
+# API Configuration
+# if you run locally replace YOUR_IPv4_ADDRESS with your actual IPv4 address
+API_URL = "http://YOUR_IPv4_ADDRESS:3000/api"  
 
-4. Set up the server:
-   ```bash
-   cd server
-   npm install
-   ```
+# Google Authentication
+GOOGLE_CLIENT_ID = "your_google_client_id"
+GOOGLE_REDIRECT_URI = "https://auth.expo.io/@your-expo-username/foodfighters"
+```
 
-5. Start the server:
-   ```bash
-   npm start
-   ```
+#### Backend Setup
+Create a `.env` file in the server directory based on `.env.example.backend`:
+```env
+# Server Configuration
+PORT = "3000"
+# if you run locally replace YOUR_IPv4_ADDRESS with your actual IPv4 address
+API_URL = "http://YOUR_IPv4_ADDRESS:3000"  
 
-6. Start the development server (in a new terminal, from the root directory):
-   ```bash
-   npx expo start
-   ```
+# Database Configuration
+MONGODB_URI = "your_mongodb_connection_string"
 
-7. Run on your preferred platform:
-   - Press `i` for iOS simulator
-   - Press `a` for Android emulator
-   - Scan QR code with Expo Go app on your physical device
+# Authentication
+JWT_SECRET = "your_jwt_secret_key_here"
 
-## Troubleshooting Installation Issues 🔧
+# Google OAuth
+GOOGLE_CLIENT_ID = "your_google_client_id_here"
 
-If you encounter any issues during installation, try these steps:
+# OpenAI Configuration
+OPENAI_API_KEY = "your_openai_api_key_here"
+```
 
-1. Update Expo to the latest version:
-   ```bash
-   npx expo install expo@latest
-   ```
+> 💡 **Important Notes:**
+> - For local development, use your machine's IPv4 address instead of 'localhost'
+> - For production, use your actual domain URL
+> 
+> 🔍 **How to find your IPv4 address:**
+> - Windows: Run `ipconfig` in Command Prompt
+> - Mac/Linux: Run `ifconfig` or `ip addr` in Terminal
 
-2. Fix dependency issues:
-   ```bash
-   npx expo install --fix
-   ```
+### 3️⃣ Server Setup
+```bash
+# Navigate to server directory
+cd server
 
-3. If you're still having problems with npm dependencies, try installing with legacy peer deps:
-   ```bash
-   npm install --legacy-peer-deps
-   ```
+# Install server dependencies
+npm install
 
-4. If the above steps don't work, try clearing npm cache and node_modules:
-   ```bash
-   npm cache clean --force
-   rm -rf node_modules
-   npm install
-   ```
+# Start the server
+npm start
+```
+
+### 4️⃣ Start Development
+```bash
+# In a new terminal, from the root directory
+npx expo start --clear
+```
+
+### 5️⃣ Run the App
+Choose your preferred platform:
+- iOS: Press `i` for iOS simulator
+- Android: Press `a` for Android emulator
+- Physical Device: Scan `QR code` with Expo Go app
+
+## 🔧 Troubleshooting
+
+If you encounter any issues during installation, try these solutions in order:
+
+### 1. Update Expo
+```bash
+npx expo install expo@latest
+```
+
+### 2. Fix Dependencies
+```bash
+npx expo install --fix
+```
+
+### 3. Legacy Peer Dependencies
+```bash
+npm install --legacy-peer-deps
+```
+
+### 4. Clean Installation
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Remove node_modules
+rm -rf node_modules
+
+# Fresh install
+npm install
+```
